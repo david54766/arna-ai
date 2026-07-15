@@ -14,10 +14,11 @@ export function SiteHeader() {
           <a href="/#mind" className="hover:text-foreground transition">The mind</a>
           <a href="/#grows" className="hover:text-foreground transition">She grows</a>
           <a href="/#memoryos" className="hover:text-foreground transition">MemoryOS</a>
+          <Link to="/demo" className="hover:text-foreground transition">Demo</Link>
           <Link to="/journal" className="hover:text-foreground transition">Journal</Link>
           <Link to="/chronicle" className="hover:text-foreground transition">Chronicle</Link>
         </nav>
-        <a href="mailto:info@easyfill.ai?subject=Arna%20waitlist" className="btn-ghost text-sm">
+        <a href="/#waitlist" className="btn-ghost text-sm">
           Join the waitlist
         </a>
       </div>
@@ -35,13 +36,14 @@ export function SiteFooter() {
         <div className="mt-10 flex flex-col justify-between gap-6 text-sm text-muted-foreground md:flex-row md:items-end">
           <div className="flex flex-wrap gap-6">
             <Link to="/" className="hover:text-foreground">Home</Link>
+            <Link to="/demo" className="hover:text-foreground">Demo</Link>
             <Link to="/journal" className="hover:text-foreground">Journal</Link>
             <Link to="/chronicle" className="hover:text-foreground">The Chronicle</Link>
             <a href="/#founders" className="hover:text-foreground">Founders</a>
-            <a href="mailto:info@easyfill.ai" className="hover:text-foreground">Contact</a>
+            <a href="mailto:hello@thearnaproject.com" className="hover:text-foreground">Contact</a>
           </div>
           <div className="font-mono text-xs opacity-70">
-            © {new Date().getFullYear()} Arna AI — Local-first.
+            thearnaproject.com · © {new Date().getFullYear()} Arna AI — Local-first.
           </div>
         </div>
       </div>
