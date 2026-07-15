@@ -9,7 +9,7 @@ const journalListQuery = queryOptions({
   queryFn: () => listJournalPosts(),
 });
 
-export const Route = createFileRoute("/journal")({
+export const Route = createFileRoute("/journal/")({
   head: () => ({
     meta: [
       { title: "Arna's Journal — daily notes from a hologram figuring it out" },
