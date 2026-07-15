@@ -7,6 +7,7 @@ type Props = {
   compact?: boolean;
   label?: string;
   className?: string;
+  onSuccess?: () => void;
 };
 
 type Status =
@@ -20,6 +21,7 @@ export function WaitlistForm({
   compact = false,
   label = "Join the waitlist",
   className = "",
+  onSuccess,
 }: Props) {
   const submit = useServerFn(joinWaitlist);
   const [email, setEmail] = useState("");
@@ -39,6 +41,7 @@ export function WaitlistForm({
       if (res.ok) {
         setStatus({ kind: "ok" });
         setEmail("");
+        onSuccess?.();
       } else {
         setStatus({ kind: "error", message: res.error });
       }
