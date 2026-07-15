@@ -77,14 +77,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Arna — One mouth, one memory, one mind. A body, a memory, and a mind you own." },
+      { name: "description", content: "Arna is a local-first AI companion: a body, a memory, and a mind you own. Runs on your hardware. No cloud required." },
+      { name: "author", content: "Arna AI" },
+      { property: "og:site_name", content: "Arna" },
+      { property: "og:title", content: "Arna — One mouth, one memory, one mind." },
+      { property: "og:description", content: "A body, a memory, and a mind you own. Runs on your hardware. No cloud required." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
