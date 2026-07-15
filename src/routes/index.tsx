@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { Page, Section, PullQuote } from "../components/site-chrome";
 import { Gallery } from "../components/gallery";
 
