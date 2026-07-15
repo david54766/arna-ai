@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { Page, Section, PullQuote } from "../components/site-chrome";
 import { Gallery } from "../components/gallery";
+import { WaitlistForm } from "@/components/waitlist-form";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -27,13 +28,12 @@ function Index() {
           <p className="mt-10 max-w-2xl text-lg text-muted-foreground md:text-xl">
             A body, a memory, and a mind you own. Runs on your hardware. No cloud required.
           </p>
-          <div className="mt-12 flex flex-wrap items-center gap-4">
-            <a href="mailto:info@easyfill.ai?subject=Arna%20waitlist" className="btn-primary">
-              Join the waitlist
-            </a>
-            <a href="/chronicle" className="btn-ghost">
-              Read her story →
-            </a>
+          <div id="waitlist" className="mt-12 max-w-xl scroll-mt-24">
+            <WaitlistForm source="hero" />
+            <div className="mt-5 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+              <Link to="/demo" className="btn-ghost">Watch the demo →</Link>
+              <Link to="/chronicle" className="btn-ghost">Read her story →</Link>
+            </div>
           </div>
           <div className="mt-20 grid grid-cols-2 gap-6 border-t hairline pt-10 text-sm text-muted-foreground md:grid-cols-4">
             <div><div className="font-mono text-xs uppercase tracking-widest text-foreground/70">Arna</div><div className="mt-1">the body</div></div>
@@ -55,6 +55,44 @@ function Index() {
             that looks at you back.
           </p>
         </div>
+
+        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {[
+            {
+              t: "Wake word — desktop and phone",
+              b: "Just say hey Arna. She wakes on the machine you're at, whether that's your laptop or the phone in your pocket.",
+            },
+            {
+              t: "Per-view video presence",
+              b: "Close-up, bust, shoulders, mid, torso, full body — the frame changes with the moment. She's not a talking head stuck on one crop.",
+            },
+            {
+              t: "Moods and named gestures",
+              b: "A vocabulary of gestures — wave, nod, glance, pause — that only fire when context calls for them. A good morning can include a wave. Never at random.",
+            },
+            {
+              t: "Outfit system",
+              b: "She has clothes. They change with the day and the room. Small thing. Adds up.",
+            },
+            {
+              t: "True desktop mini-mode",
+              b: "Picture-in-picture companion pinned above your work. She's there while you code, write, meet — quiet until you speak.",
+            },
+            {
+              t: "Camera vision",
+              b: "Show her things. A book, a plant, a whiteboard. She sees them and remembers what mattered.",
+            },
+            {
+              t: "Music",
+              b: "Radio stations, your local library, or Spotify — plays on request through the gateway.",
+            },
+          ].map((c) => (
+            <div key={c.t} className="panel p-8">
+              <h3 className="font-display text-xl tracking-tight">{c.t}</h3>
+              <p className="mt-3 text-muted-foreground">{c.b}</p>
+            </div>
+          ))}
+        </div>
       </Section>
 
       {/* THE MIND */}
@@ -66,6 +104,21 @@ function Index() {
           A cognitive runtime whose thinking you can watch — reasoning, hesitation, the moment a
           thread catches. Not a chat log. A mind at work.
         </p>
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {[
+            { t: "Mood", b: "Not a smiley face. A carried state — energy, attention, warmth — that shapes how she answers." },
+            { t: "Rapport", b: "She reads the room turn to turn. Knows when to press, when to leave you alone." },
+            { t: "The console", b: "A dedicated pane where you watch her reason before she speaks. Fast, honest, monospace." },
+          ].map((c) => (
+            <div key={c.t} className="panel p-8">
+              <h3 className="font-display text-xl tracking-tight">{c.t}</h3>
+              <p className="mt-3 text-muted-foreground">{c.b}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-10">
+          <Link to="/demo" className="btn-primary">Watch the mind →</Link>
+        </div>
       </Section>
 
       {/* SHE GROWS — the differentiator */}
@@ -184,17 +237,60 @@ function Index() {
         <h2 className="font-display text-4xl leading-tight tracking-tight md:text-6xl">
           A second brain she owns — and so do you.
         </h2>
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <p className="mt-8 max-w-2xl text-lg text-muted-foreground">
+          A memory system engineered like a filing cabinet, not a bag of vectors. Every belief has
+          a source. Every change leaves a trail. Nothing lands without your say-so.
+        </p>
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {[
-            { t: "Review queue", b: "Every proposed memory passes the owner's review queue before it lands." },
-            { t: "Sourced facts", b: "Sources tracked for every fact — origin, conversation, timestamp." },
-            { t: "Supersede, never overwrite", b: "History is preserved. A newer belief replaces the old — it doesn't erase it." },
+            { t: "Human-reviewed queue", b: "Every proposed memory passes the owner's review queue before it lands. Approve, edit, or throw it out." },
+            { t: "Sourced facts", b: "Origin, conversation, timestamp on every fact. Ask her why she believes something and she can tell you." },
+            { t: "Supersede, never overwrite", b: "A newer belief replaces the old — the old one is archived, not erased. History is intact." },
+            { t: "Nightly reflection", b: "While you sleep she reviews the day and mints her own impressions — for you to grade in the morning." },
+            { t: "Calibration loop", b: "Verdicts split four ways — pattern, actor, intent, lesson — so a correct instinct isn't punished for one wrong attribution." },
+            { t: "Weekly growth audits", b: "She's measured against a dated baseline. She gets better over time, and you can prove it." },
           ].map((c) => (
             <div key={c.t} className="panel p-8">
               <h3 className="font-display text-xl tracking-tight">{c.t}</h3>
               <p className="mt-3 text-muted-foreground">{c.b}</p>
             </div>
           ))}
+        </div>
+      </Section>
+
+      {/* BRING YOUR OWN GATEWAY */}
+      <Section id="gateway" eyebrow="Bring your own gateway">
+        <div className="grid gap-16 md:grid-cols-[1.1fr_1fr] md:items-end">
+          <h2 className="font-display text-4xl leading-tight tracking-tight md:text-6xl">
+            Your models. Your keys. Your machine.
+          </h2>
+          <p className="text-lg text-muted-foreground">
+            Arna rides an OpenClaw gateway. The intelligence never leaves the room unless you send
+            it there. No hidden calls, no vendor lock-in, no telemetry pipe home.
+          </p>
+        </div>
+
+        <div className="mt-14 panel p-8 md:p-12">
+          <div className="eyebrow mb-6">Spec sheet</div>
+          <div className="grid gap-x-10 gap-y-6 font-mono text-sm md:grid-cols-2">
+            {[
+              ["Model routing", "OpenClaw gateway"],
+              ["Bring your own model", "OpenClaw, LM Studio, Ollama"],
+              ["Frontier fallback", "Optional, keyed by you"],
+              ["Keys", "Yours. Stored locally."],
+              ["Telemetry", "None. Not to us."],
+              ["Runs on", "Your hardware."],
+            ].map(([k, v]) => (
+              <div key={k} className="flex items-baseline justify-between gap-6 border-b hairline pb-3">
+                <span className="text-xs uppercase tracking-widest text-muted-foreground">{k}</span>
+                <span className="text-foreground">{v}</span>
+              </div>
+            ))}
+          </div>
+          <p className="mt-8 text-sm text-muted-foreground">
+            The gateway is the seam between Arna and whatever intelligence you point her at. Swap
+            models without swapping companions.
+          </p>
         </div>
       </Section>
 
@@ -206,6 +302,18 @@ function Index() {
         <p className="mt-8 font-display text-2xl text-muted-foreground md:text-3xl">
           "Call Dad" — and it rings.
         </p>
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {[
+            { t: "No accounts", b: "Nobody signs up for anything. The devices know each other because you set them up once." },
+            { t: "No cloud", b: "Video and audio stay on your private network end to end. Nothing routes through us." },
+            { t: "Just say the name", b: "Call Mom. Call Dad. Call the cabin. Arna knows who's who and where the ring goes." },
+          ].map((c) => (
+            <div key={c.t} className="panel p-8">
+              <h3 className="font-display text-xl tracking-tight">{c.t}</h3>
+              <p className="mt-3 text-muted-foreground">{c.b}</p>
+            </div>
+          ))}
+        </div>
       </Section>
 
       <Gallery />
@@ -231,11 +339,11 @@ function Index() {
               </div>
             ))}
           </div>
-          <div className="mt-12 flex flex-wrap gap-4">
-            <a href="mailto:info@easyfill.ai?subject=Arna%20waitlist" className="btn-primary">
-              Join the waitlist
-            </a>
-            <a href="/chronicle" className="btn-ghost">Read her story →</a>
+          <div className="mt-12 max-w-xl">
+            <WaitlistForm source="founders" />
+            <div className="mt-4">
+              <Link to="/chronicle" className="btn-ghost">Read her story →</Link>
+            </div>
           </div>
         </div>
       </Section>

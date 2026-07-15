@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DemoRouteImport } from './routes/demo'
 import { Route as ChronicleRouteImport } from './routes/chronicle'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as JournalIndexRouteImport } from './routes/journal.index'
 import { Route as JournalSlugRouteImport } from './routes/journal.$slug'
 
+const DemoRoute = DemoRouteImport.update({
+  id: '/demo',
+  path: '/demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChronicleRoute = ChronicleRouteImport.update({
   id: '/chronicle',
   path: '/chronicle',
@@ -38,12 +44,14 @@ const JournalSlugRoute = JournalSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/chronicle': typeof ChronicleRoute
+  '/demo': typeof DemoRoute
   '/journal/$slug': typeof JournalSlugRoute
   '/journal/': typeof JournalIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/chronicle': typeof ChronicleRoute
+  '/demo': typeof DemoRoute
   '/journal/$slug': typeof JournalSlugRoute
   '/journal': typeof JournalIndexRoute
 }
@@ -51,26 +59,35 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/chronicle': typeof ChronicleRoute
+  '/demo': typeof DemoRoute
   '/journal/$slug': typeof JournalSlugRoute
   '/journal/': typeof JournalIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chronicle' | '/journal/$slug' | '/journal/'
+  fullPaths: '/' | '/chronicle' | '/demo' | '/journal/$slug' | '/journal/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/chronicle' | '/journal/$slug' | '/journal'
-  id: '__root__' | '/' | '/chronicle' | '/journal/$slug' | '/journal/'
+  to: '/' | '/chronicle' | '/demo' | '/journal/$slug' | '/journal'
+  id: '__root__' | '/' | '/chronicle' | '/demo' | '/journal/$slug' | '/journal/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChronicleRoute: typeof ChronicleRoute
+  DemoRoute: typeof DemoRoute
   JournalSlugRoute: typeof JournalSlugRoute
   JournalIndexRoute: typeof JournalIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/demo': {
+      id: '/demo'
+      path: '/demo'
+      fullPath: '/demo'
+      preLoaderRoute: typeof DemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/chronicle': {
       id: '/chronicle'
       path: '/chronicle'
@@ -105,6 +122,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChronicleRoute: ChronicleRoute,
+  DemoRoute: DemoRoute,
   JournalSlugRoute: JournalSlugRoute,
   JournalIndexRoute: JournalIndexRoute,
 }
