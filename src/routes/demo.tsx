@@ -167,37 +167,7 @@ function DemoGate({ onUnlock }: { onUnlock: () => void }) {
 }
 
 function WaitlistFormWrapper({ onSuccess }: { onSuccess: () => void }) {
-  // Wrap so we can trigger unlock the moment the form flips to success.
-  return (
-    <div
-      onClickCapture={() => {
-        // fallback: reveal after the button click even if the form success message renders
-      }}
-    >
-      <DemoWaitlist onUnlock={onSuccess} />
-    </div>
-  );
-}
-
-function DemoWaitlist({ onUnlock }: { onUnlock: () => void }) {
-  // Small local wrapper: unlock immediately after a successful submit by watching the DOM
-  // via a MutationObserver on the form container. Simpler alternative: reuse WaitlistForm and
-  // let its own success state trigger via onSuccess prop — but WaitlistForm has no callback.
-  // We add unlock by listening for the success node to appear.
-  useEffect(() => {
-    const root = document.getElementById("demo-waitlist-root");
-    if (!root) return;
-    const observer = new MutationObserver(() => {
-      if (root.textContent?.includes("You're on the list")) onUnlock();
-    });
-    observer.observe(root, { childList: true, subtree: true, characterData: true });
-    return () => observer.disconnect();
-  }, [onUnlock]);
-  return (
-    <div id="demo-waitlist-root">
-      <WaitlistForm source="demo" label="Unlock the demo" />
-    </div>
-  );
+  return <WaitlistForm source="demo" label="Unlock the demo" onSuccess={onSuccess} />;
 }
 
 function DemoStage({
