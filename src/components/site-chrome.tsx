@@ -16,7 +16,7 @@ export function SiteHeader() {
           <a href="/#memoryos" className="hover:text-foreground transition">MemoryOS</a>
           <Link to="/chronicle" className="hover:text-foreground transition">Chronicle</Link>
         </nav>
-        <a href="mailto:waitlist@arna.ai?subject=Arna%20waitlist" className="btn-ghost text-sm">
+        <a href="mailto:info@easyfill.ai?subject=Arna%20waitlist" className="btn-ghost text-sm">
           Join the waitlist
         </a>
       </div>
@@ -36,7 +36,7 @@ export function SiteFooter() {
             <Link to="/" className="hover:text-foreground">Home</Link>
             <Link to="/chronicle" className="hover:text-foreground">The Chronicle</Link>
             <a href="/#founders" className="hover:text-foreground">Founders</a>
-            <a href="mailto:hello@arna.ai" className="hover:text-foreground">Contact</a>
+            <a href="mailto:info@easyfill.ai" className="hover:text-foreground">Contact</a>
           </div>
           <div className="font-mono text-xs opacity-70">
             © {new Date().getFullYear()} Arna AI — Local-first.

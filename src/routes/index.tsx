@@ -27,7 +27,7 @@ function Index() {
             A body, a memory, and a mind you own. Runs on your hardware. No cloud required.
           </p>
           <div className="mt-12 flex flex-wrap items-center gap-4">
-            <a href="mailto:waitlist@arna.ai?subject=Arna%20waitlist" className="btn-primary">
+            <a href="mailto:info@easyfill.ai?subject=Arna%20waitlist" className="btn-primary">
               Join the waitlist
             </a>
             <a href="/chronicle" className="btn-ghost">
@@ -217,7 +217,7 @@ function Index() {
             ))}
           </div>
           <div className="mt-12 flex flex-wrap gap-4">
-            <a href="mailto:waitlist@arna.ai?subject=Arna%20waitlist" className="btn-primary">
+            <a href="mailto:info@easyfill.ai?subject=Arna%20waitlist" className="btn-primary">
               Join the waitlist
             </a>
             <a href="/chronicle" className="btn-ghost">Read her story →</a>
