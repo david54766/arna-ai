@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>See her think — the Arna Mind live demo</title>
+  <meta name="description" content="Watch Arna think before she speaks: a recorded cognitive session played turn-by-turn, her live Mind Console synced to each turn, and an explorable synthetic memory graph. Runs 100% locally on your machine." />
+  <meta name="color-scheme" content="dark" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/site.css" />
+</head>
+<body class="demo-page">
+  <a class="skip-link" href="#demo-main">Skip to content</a>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header is-scrolled" id="top">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html" aria-label="Arna — body, memory, mind — home">
+        <svg class="brand-mark" width="34" height="30" viewBox="0 0 40 32" aria-hidden="true" focusable="false">
+          <circle cx="8" cy="16" r="4.2" fill="none" stroke="var(--arna)" stroke-width="1.6" />
+          <circle cx="20" cy="16" r="4.2" fill="none" stroke="var(--mem)" stroke-width="1.6" />
+          <circle cx="32" cy="16" r="4.2" fill="none" stroke="var(--mind)" stroke-width="1.6" />
+          <path d="M12.2 16 h3.6 M24.2 16 h3.6" stroke="var(--fg-dim)" stroke-width="1.4" stroke-linecap="round" />
+        </svg>
+        <span class="brand-text">Arna</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html#arna">Body</a>
+        <a href="index.html#mind">Mind</a>
+        <a href="index.html#memoryos">Memory</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a class="nav-cta" href="index.html#waitlist">Join waitlist</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="demo-main">
+
+    <!-- ===================== DEMO HERO ===================== -->
+    <section class="demo-hero">
+      <div class="wrap demo-hero-inner">
+        <p class="eyebrow"><span class="grad-mind" style="font-weight:700;">Arna Mind</span> · the flagship</p>
+        <h1 class="demo-title">See her <span class="grad-mind">think</span> before she speaks.</h1>
+        <p class="demo-lede">
+          Not a canned chatbot transcript. This is a real Arna Mind cognitive session, recorded
+          turn-by-turn — with the pre-verbal thinking beat made visible, her whole mental state
+          exposed in a live console, and an explorable memory graph beneath it.
+        </p>
+
+        <!-- Honesty banner (always visible) -->
+        <div class="honesty-banner" role="note">
+          <svg class="hb-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 8 v0.01 M12 11 v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <p><strong>Recorded from a real Arna Mind session</strong> over a purpose-scripted, fully
+          fictional conversation — plus <strong>illustrative synthetic memories</strong>. No real
+          personal data appears anywhere here. The product runs <strong>100% locally on your machine</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== EMAIL GATE ===================== -->
+    <section class="section demo-gate-section" id="demo-gate" aria-labelledby="gate-title">
+      <div class="wrap">
+        <div class="demo-gate panel reveal is-visible">
+          <div class="gate-copy">
+            <p class="kicker kicker-mind">One step</p>
+            <h2 id="gate-title" class="section-title">Unlock the interactive demo.</h2>
+            <p class="lede">
+              Drop your email to open <em>"See her think."</em> You'll join the founders waitlist,
+              and the demo unlocks right here in your browser — and stays unlocked on this device.
+            </p>
+            <ul class="gate-points">
+              <li>Play a real 4-turn cognitive session, turn by turn</li>
+              <li>Watch the Mind Console update with every turn</li>
+              <li>Explore a synthetic memory graph &amp; review inbox</li>
+            </ul>
+          </div>
+          <form id="gate-form" class="gate-form" novalidate>
+            <label class="sr-only" for="gate-email">Email address</label>
+            <input
+              id="gate-email"
+              name="email"
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              required
+              aria-describedby="gate-note"
+            />
+            <button class="btn btn-primary" type="submit">Unlock the demo</button>
+            <p id="gate-note" class="gate-note" role="status" aria-live="polite"></p>
+            <p class="fine">Stored locally in your browser only — no backend, nothing sent anywhere yet.
+              A single, clearly-documented submit hook in <code>js/demo.js</code> is where a real
+              endpoint plugs in later.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== THE DEMO (revealed after unlock) ===================== -->
+    <section class="section demo-stage-section" id="demo-stage" hidden aria-labelledby="stage-title">
+      <div class="wrap">
+        <div class="section-head reveal is-visible" style="margin-bottom:clamp(28px,4vw,44px);">
+          <p class="kicker kicker-mind">Live demo · unlocked</p>
+          <h2 id="stage-title" class="section-title">One turn at a time — watch the whole mind work.</h2>
+          <p class="lede lede-center" id="stage-sub">Loading the recorded session…</p>
+        </div>
+
+        <!-- transport / controls -->
+        <div class="demo-controls" role="group" aria-label="Replay controls">
+          <button class="btn btn-primary demo-advance" id="btn-advance" type="button" disabled>Begin the session</button>
+          <button class="btn btn-ghost demo-reset" id="btn-reset" type="button">Restart</button>
+          <span class="demo-progress" id="demo-progress" aria-live="polite">turn 0 of 0</span>
+        </div>
+
+        <!-- three panes -->
+        <div class="demo-grid">
+
+          <!-- (a) CONVERSATION REPLAY -->
+          <div class="pane pane-replay panel" aria-labelledby="pane-replay-h">
+            <div class="pane-head">
+              <span class="pane-badge badge-arna">A</span>
+              <div>
+                <h3 id="pane-replay-h">Conversation replay</h3>
+                <p class="pane-sub">the pre-verbal beat, made visible</p>
+              </div>
+              <span class="dot dot-live" aria-hidden="true"></span>
+            </div>
+            <div class="chat-scroll" id="chat-scroll" role="log" aria-live="polite" aria-label="Conversation replay">
+              <div class="chat-empty" id="chat-empty">
+                <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="none" stroke="var(--arna)" stroke-width="1.4" stroke-opacity="0.5"/><path d="M16 22 h16 M16 27 h10" stroke="var(--arna)" stroke-width="1.6" stroke-linecap="round" stroke-opacity="0.7"/></svg>
+                <p>Press <strong>Begin the session</strong> to play the first turn. Each turn shows Sam's
+                message, then Arna's <em>thinking beat</em> — the real pre-verbal pause — before she replies.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- (b) MIND CONSOLE -->
+          <div class="pane pane-console" aria-labelledby="pane-console-h">
+            <div class="mind-console demo-console">
+              <div class="mc-bar">
+                <span class="pane-badge badge-mind">B</span>
+                <span class="mc-title" id="pane-console-h">Mind Console</span>
+                <span class="mc-status" id="mc-turn-label">awaiting turn 1</span>
+              </div>
+              <div class="mc-body" id="mc-body">
+                <p class="mc-idle">Every field below is a genuine <code>MindResult</code> debug field, captured
+                  from the live run — percept, affect, the chosen stance and why, discarded options,
+                  faculty sources, and timings. It updates in sync with each turn.</p>
+              </div>
+            </div>
+            <p class="console-note">Real captured fields — synced to the replay on the left.</p>
+          </div>
+
+          <!-- (c) MEMORY GRAPH -->
+          <div class="pane pane-graph panel" aria-labelledby="pane-graph-h">
+            <div class="pane-head">
+              <span class="pane-badge badge-mem">C</span>
+              <div>
+                <h3 id="pane-graph-h">Memory graph</h3>
+                <p class="pane-sub">synthetic persona · click a node</p>
+              </div>
+              <span class="dot" style="background:var(--mem);box-shadow:0 0 9px var(--mem);" aria-hidden="true"></span>
+            </div>
+            <div class="graph-wrap">
+              <canvas id="mem-graph-canvas" class="mem-graph-canvas" aria-hidden="true"></canvas>
+              <div class="graph-hint" id="graph-hint">Click any node to inspect it</div>
+            </div>
+            <div class="graph-detail" id="graph-detail" role="status" aria-live="polite">
+              <p class="gd-empty">Select a memory node above to see its type, content, and provenance.</p>
+            </div>
+
+            <!-- mini review-inbox vignette (illustrative) -->
+            <div class="review-vignette" aria-label="Review inbox — illustrative">
+              <div class="rv-head">
+                <span class="rv-title">Review inbox</span>
+                <span class="rv-tag">illustrative</span>
+              </div>
+              <div class="rv-card" id="rv-card">
+                <div class="rv-top">
+                  <span class="rv-type">preference</span>
+                  <span class="rv-conf">confidence 0.90</span>
+                </div>
+                <p class="rv-content">"Sam prefers a short morning check-in like this."</p>
+                <p class="rv-meta">
+                  <span class="rv-src">source · turn 4 exchange</span>
+                  <span class="rv-reason">reason · stated a routine preference, worth remembering</span>
+                </p>
+                <div class="rv-actions">
+                  <button class="rv-btn rv-approve" type="button" data-illustrative>Approve</button>
+                  <button class="rv-btn rv-reject" type="button" data-illustrative>Reject</button>
+                </div>
+                <p class="rv-note">Buttons are illustrative — the real review gate lives in MemoryOS.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="fine center demo-foot">
+          The conversation and its cognition are recorded from a real Arna Mind run; the persona,
+          its memories, and the review card are synthetic and purpose-built for this demo. Nothing
+          here touches real personal data, and the product runs entirely on your own hardware.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="wrap footer-base" style="border:0;padding-top:0;">
+      <p>© 2026 easyfill.ai. All rights reserved.</p>
+      <p class="footer-tag">One mouth, one memory, one mind. No cloud required.</p>
+    </div>
+  </footer>
+
+  <script src="js/demo.js" defer></script>
+</body>
+</html>
