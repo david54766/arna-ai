@@ -13,8 +13,8 @@ export function SiteHeader() {
           <a href="/#body" className="hover:text-foreground transition">The body</a>
           <a href="/#mind" className="hover:text-foreground transition">The mind</a>
           <a href="/#grows" className="hover:text-foreground transition">She grows</a>
-          <Link to="/journal" className="hover:text-foreground transition">Journal</Link>
           <a href="/#memoryos" className="hover:text-foreground transition">MemoryOS</a>
+          <Link to="/journal" className="hover:text-foreground transition">Journal</Link>
           <Link to="/chronicle" className="hover:text-foreground transition">Chronicle</Link>
         </nav>
         <a href="mailto:info@easyfill.ai?subject=Arna%20waitlist" className="btn-ghost text-sm">
