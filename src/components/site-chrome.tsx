@@ -1,26 +1,45 @@
 import { Link } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
-export function SiteHeader() {
+function BrandMark() {
   return (
-    <header className="sticky top-0 z-40 border-b hairline backdrop-blur-xl bg-background/60">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link to="/" className="flex items-center gap-2 font-display text-lg tracking-tight">
-          <span className="relative inline-block h-2 w-2 rounded-full bg-accent shadow-[0_0_16px_2px_var(--glow)]" />
-          <span>Arna</span>
+    <svg className="brand-mark" width="34" height="30" viewBox="0 0 40 32" aria-hidden="true" focusable="false">
+      <circle cx="8" cy="16" r="4.2" fill="none" stroke="var(--arna)" strokeWidth="1.6" />
+      <circle cx="20" cy="16" r="4.2" fill="none" stroke="var(--mem)" strokeWidth="1.6" />
+      <circle cx="32" cy="16" r="4.2" fill="none" stroke="var(--mind)" strokeWidth="1.6" />
+      <path d="M12.2 16 h3.6 M24.2 16 h3.6" stroke="var(--fg-dim)" strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function SiteHeader({ transparentUntilScroll = true }: { transparentUntilScroll?: boolean }) {
+  const [scrolled, setScrolled] = useState(!transparentUntilScroll);
+  useEffect(() => {
+    if (!transparentUntilScroll) return;
+    const on = () => setScrolled(window.scrollY > 12);
+    on();
+    window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
+  }, [transparentUntilScroll]);
+
+  return (
+    <header className={`site-header ${scrolled ? "is-scrolled" : ""}`} id="top">
+      <div className="wrap header-inner">
+        <Link to="/" className="brand" aria-label="Arna — body, memory, mind — home">
+          <BrandMark />
+          <span className="brand-text">Arna</span>
         </Link>
-        <nav className="hidden gap-8 text-sm text-muted-foreground md:flex">
-          <a href="/#body" className="hover:text-foreground transition">The body</a>
-          <a href="/#mind" className="hover:text-foreground transition">The mind</a>
-          <a href="/#grows" className="hover:text-foreground transition">She grows</a>
-          <a href="/#memoryos" className="hover:text-foreground transition">MemoryOS</a>
-          <Link to="/demo" className="hover:text-foreground transition">Demo</Link>
-          <Link to="/journal" className="hover:text-foreground transition">Journal</Link>
-          <Link to="/chronicle" className="hover:text-foreground transition">Chronicle</Link>
+        <nav className="site-nav" aria-label="Primary">
+          <a href="/#arna">Body</a>
+          <a href="/#mind">Mind</a>
+          <a href="/#grows">She grows</a>
+          <a href="/#memoryos">Memory</a>
+          <a href="/#oversight">Oversight</a>
+          <Link to="/journal">Journal</Link>
+          <Link to="/chronicle" className="nav-chron">Chronicle</Link>
+          <Link to="/demo" className="nav-demo">See her think</Link>
+          <a className="nav-cta" href="/#waitlist">Join waitlist</a>
         </nav>
-        <a href="/#waitlist" className="btn-ghost text-sm">
-          Join the waitlist
-        </a>
       </div>
     </header>
   );
@@ -28,62 +47,81 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   return (
-    <footer className="mt-32 border-t hairline">
-      <div className="mx-auto max-w-6xl px-6 py-16">
-        <p className="font-display text-2xl tracking-tight md:text-3xl">
-          Your companion. Your data. Your machine.
-        </p>
-        <div className="mt-10 flex flex-col justify-between gap-6 text-sm text-muted-foreground md:flex-row md:items-end">
-          <div className="flex flex-wrap gap-6">
-            <Link to="/" className="hover:text-foreground">Home</Link>
-            <Link to="/demo" className="hover:text-foreground">Demo</Link>
-            <Link to="/journal" className="hover:text-foreground">Journal</Link>
-            <Link to="/chronicle" className="hover:text-foreground">The Chronicle</Link>
-            <a href="/#founders" className="hover:text-foreground">Founders</a>
-            <a href="mailto:hello@thearnaproject.com" className="hover:text-foreground">Contact</a>
+    <footer className="site-footer">
+      <div className="wrap footer-inner">
+        <div>
+          <div className="footer-brand">
+            <BrandMark />
+            <span>Arna</span>
           </div>
-          <div className="font-mono text-xs opacity-70">
-            thearnaproject.com · © {new Date().getFullYear()} Arna AI — Local-first.
+          <p className="footer-tag-lead">
+            A body, a memory, and a mind you own. Runs on your hardware. No cloud required.
+          </p>
+        </div>
+        <div className="footer-nav">
+          <div className="footer-col">
+            <h4>Products</h4>
+            <a href="/#arna">Arna — the body</a>
+            <a href="/#memoryos">MemoryOS</a>
+            <a href="/#mind">Arna Mind</a>
+            <a href="/#link">Arna Link</a>
+          </div>
+          <div className="footer-col">
+            <h4>Story</h4>
+            <Link to="/journal">Arna&rsquo;s Journal</Link>
+            <Link to="/chronicle">The Chronicle</Link>
+            <Link to="/demo">See her think</Link>
+            <a href="/#grows">She grows</a>
+          </div>
+          <div className="footer-col">
+            <h4>Reach us</h4>
+            <a href="mailto:info@easyfill.ai?subject=Arna%20waitlist">info@easyfill.ai</a>
+            <a href="/#waitlist">Join waitlist</a>
+            <a href="/#founders">Founders</a>
           </div>
         </div>
+      </div>
+      <div className="wrap footer-base">
+        <p>© {new Date().getFullYear()} easyfill.ai. All rights reserved.</p>
+        <p className="footer-tag">thearnaproject.com · One mouth, one memory, one mind. No cloud required.</p>
       </div>
     </footer>
   );
 }
 
-export function Page({ children }: { children: ReactNode }) {
+export function Page({ children, transparentHeader = false }: { children: ReactNode; transparentHeader?: boolean }) {
   return (
-    <div className="min-h-screen">
-      <SiteHeader />
-      <main>{children}</main>
+    <>
+      <a className="skip-link" href="#main">Skip to content</a>
+      <SiteHeader transparentUntilScroll={transparentHeader} />
+      <main id="main">{children}</main>
       <SiteFooter />
-    </div>
+    </>
   );
 }
 
 export function Section({
-  id,
-  eyebrow,
-  children,
-  className = "",
+  id, eyebrow, kickerColor, children, className = "", alt = false,
 }: {
   id?: string;
   eyebrow?: string;
+  kickerColor?: "arna" | "mem" | "mind";
   children: ReactNode;
   className?: string;
+  alt?: boolean;
 }) {
   return (
-    <section id={id} className={`mx-auto max-w-6xl px-6 py-24 md:py-32 ${className}`}>
-      {eyebrow ? <div className="eyebrow mb-6">{eyebrow}</div> : null}
-      {children}
+    <section id={id} className={`section ${alt ? "section-alt" : ""} ${className}`}>
+      <div className="wrap">
+        {eyebrow ? (
+          <p className={`kicker ${kickerColor ? `kicker-${kickerColor}` : ""}`}>{eyebrow}</p>
+        ) : null}
+        {children}
+      </div>
     </section>
   );
 }
 
 export function PullQuote({ children }: { children: ReactNode }) {
-  return (
-    <blockquote className="my-10 border-l-2 pl-6 font-display text-2xl leading-snug tracking-tight text-foreground/90 md:text-3xl" style={{ borderColor: "var(--glow)" }}>
-      "{children}"
-    </blockquote>
-  );
+  return <blockquote className="pull-quote">&ldquo;{children}&rdquo;</blockquote>;
 }
