@@ -20,37 +20,21 @@ const shots: Shot[] = [
   { src: excited.url, alt: "Arna reacting mid-conversation", caption: "She reacts — mid-conversation" },
   { src: hey.url, alt: "Arna listening after wake word", caption: "Wake word: just say hey Arna" },
   { src: closeup.url, alt: "Close-up of Arna smiling", caption: "Up close" },
-  { src: settings.url, alt: "Arna settings panel showing every subsystem", caption: "Every system, one panel: memory, mind, family calling, generation, music, web, voice" },
+  { src: settings.url, alt: "Arna settings panel", caption: "Every system, one panel" },
   { src: shot6.url, alt: "Inside the Arna app", caption: "Inside the app" },
   { src: shot7.url, alt: "Inside the Arna app", caption: "Inside the app" },
   { src: shot8.url, alt: "Inside the Arna app", caption: "Inside the app" },
-  { src: shot9.url, alt: "Inside the Arna app — memory graph", caption: "Inside the app" },
+  { src: shot9.url, alt: "Memory graph in MemoryOS", caption: "Memory graph" },
   { src: shot10.url, alt: "Inside the Arna app", caption: "Inside the app" },
   { src: shot11.url, alt: "Inside the Arna app", caption: "Inside the app" },
-  { src: shot12.url, alt: "Inside the Arna app — MemoryOS nav", caption: "Inside the app" },
+  { src: shot12.url, alt: "MemoryOS nav", caption: "MemoryOS" },
 ];
-
-function PhoneFrame({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="relative mx-auto aspect-[9/19.5] w-full max-w-[280px] overflow-hidden rounded-[2.2rem] border hairline bg-black shadow-[0_20px_60px_-25px_rgba(0,0,0,0.9)]">
-      <div className="absolute inset-x-0 top-0 z-10 mx-auto mt-2 h-5 w-24 rounded-full bg-black/90" />
-      {children}
-    </div>
-  );
-}
 
 export function Gallery() {
   const [active, setActive] = useState<number | null>(null);
-
   const close = useCallback(() => setActive(null), []);
-  const next = useCallback(
-    () => setActive((i) => (i === null ? null : (i + 1) % shots.length)),
-    [],
-  );
-  const prev = useCallback(
-    () => setActive((i) => (i === null ? null : (i - 1 + shots.length) % shots.length)),
-    [],
-  );
+  const next = useCallback(() => setActive((i) => (i === null ? null : (i + 1) % shots.length)), []);
+  const prev = useCallback(() => setActive((i) => (i === null ? null : (i - 1 + shots.length) % shots.length)), []);
 
   useEffect(() => {
     if (active === null) return;
@@ -68,81 +52,45 @@ export function Gallery() {
   }, [active, close, next, prev]);
 
   return (
-    <section id="gallery" className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-      <div className="eyebrow mb-6">Gallery</div>
-      <h2 className="font-display text-4xl tracking-tight md:text-5xl">See her in action</h2>
-      <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
-        Real captures from the Arna app — v178 on Android. Tap any frame to zoom.
-      </p>
-      <div className="mt-14 grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
-        {shots.map((shot, i) => (
-          <figure key={shot.src} className="group">
-            <button
-              type="button"
-              onClick={() => setActive(i)}
-              className="block w-full text-left focus:outline-none"
-              aria-label={`Open ${shot.caption}`}
-            >
-              <PhoneFrame>
-                <img
-                  src={shot.src}
-                  alt={shot.alt}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
-                />
-              </PhoneFrame>
-            </button>
-            <figcaption className="mt-4 px-1 text-xs text-muted-foreground md:text-sm">
-              {shot.caption}
-            </figcaption>
-          </figure>
-        ))}
+    <section id="gallery" className="section" aria-labelledby="gallery-title">
+      <div className="wrap">
+        <div className="section-head">
+          <p className="kicker kicker-arna">See her in action</p>
+          <h2 id="gallery-title" className="section-title">Straight from the app.</h2>
+          <p className="lede lede-center">Real captures of Arna — v178 on Android. Tap any frame to zoom.</p>
+        </div>
+        <ul className="gallery-grid" aria-label="Product screenshots">
+          {shots.map((shot, i) => (
+            <li key={shot.src} className="gallery-item" onClick={() => setActive(i)} style={{ cursor: "pointer" }}>
+              <img src={shot.src} alt={shot.alt} loading="lazy" />
+              <p className="gallery-cap">{shot.caption}</p>
+            </li>
+          ))}
+        </ul>
       </div>
 
       {active !== null ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+          className="lightbox"
           onClick={close}
           role="dialog"
           aria-modal="true"
           aria-label={shots[active].caption}
+          style={{
+            position: "fixed", inset: 0, zIndex: 100,
+            background: "rgba(2,6,23,0.92)", backdropFilter: "blur(8px)",
+            display: "flex", alignItems: "center", justifyContent: "center", padding: "24px",
+          }}
         >
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); prev(); }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full border hairline bg-background/60 px-4 py-2 text-sm text-foreground/80 hover:text-foreground"
-            aria-label="Previous"
-          >
-            ←
-          </button>
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); next(); }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full border hairline bg-background/60 px-4 py-2 text-sm text-foreground/80 hover:text-foreground"
-            aria-label="Next"
-          >
-            →
-          </button>
-          <button
-            type="button"
-            onClick={close}
-            className="absolute right-4 top-4 rounded-full border hairline bg-background/60 px-3 py-1 text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground"
-            aria-label="Close"
-          >
-            Close
-          </button>
-          <figure
-            className="flex max-h-full max-w-full flex-col items-center gap-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={shots[active].src}
-              alt={shots[active].alt}
-              className="max-h-[80vh] w-auto rounded-2xl border hairline object-contain"
-            />
-            <figcaption className="max-w-md text-center text-sm text-muted-foreground">
-              {shots[active].caption}
-            </figcaption>
+          <button type="button" onClick={(e) => { e.stopPropagation(); prev(); }} aria-label="Previous"
+            style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", padding: "10px 16px", borderRadius: 999, border: "1px solid var(--line-2)", background: "var(--glass)", color: "var(--fg)", cursor: "pointer" }}>←</button>
+          <button type="button" onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Next"
+            style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", padding: "10px 16px", borderRadius: 999, border: "1px solid var(--line-2)", background: "var(--glass)", color: "var(--fg)", cursor: "pointer" }}>→</button>
+          <button type="button" onClick={close} aria-label="Close"
+            style={{ position: "absolute", right: 16, top: 16, padding: "6px 14px", borderRadius: 999, border: "1px solid var(--line-2)", background: "var(--glass)", color: "var(--fg-dim)", cursor: "pointer", fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase" }}>Close</button>
+          <figure style={{ margin: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 12, maxHeight: "100%", maxWidth: "100%" }} onClick={(e) => e.stopPropagation()}>
+            <img src={shots[active].src} alt={shots[active].alt} style={{ maxHeight: "80vh", width: "auto", borderRadius: 16, border: "1px solid var(--line)" }} />
+            <figcaption style={{ color: "var(--fg-dim)", fontSize: 14, maxWidth: 480, textAlign: "center" }}>{shots[active].caption}</figcaption>
           </figure>
         </div>
       ) : null}
