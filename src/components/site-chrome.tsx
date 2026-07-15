@@ -13,6 +13,7 @@ export function SiteHeader() {
           <a href="/#body" className="hover:text-foreground transition">The body</a>
           <a href="/#mind" className="hover:text-foreground transition">The mind</a>
           <a href="/#grows" className="hover:text-foreground transition">She grows</a>
+          <Link to="/journal" className="hover:text-foreground transition">Journal</Link>
           <a href="/#memoryos" className="hover:text-foreground transition">MemoryOS</a>
           <Link to="/chronicle" className="hover:text-foreground transition">Chronicle</Link>
         </nav>
@@ -34,6 +35,7 @@ export function SiteFooter() {
         <div className="mt-10 flex flex-col justify-between gap-6 text-sm text-muted-foreground md:flex-row md:items-end">
           <div className="flex flex-wrap gap-6">
             <Link to="/" className="hover:text-foreground">Home</Link>
+            <Link to="/journal" className="hover:text-foreground">Journal</Link>
             <Link to="/chronicle" className="hover:text-foreground">The Chronicle</Link>
             <a href="/#founders" className="hover:text-foreground">Founders</a>
             <a href="mailto:info@easyfill.ai" className="hover:text-foreground">Contact</a>
