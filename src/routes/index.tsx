@@ -165,6 +165,20 @@ function Index() {
         </div>
       </Section>
 
+      {/* ARNA'S JOURNAL — teaser */}
+      <Section id="journal-teaser" eyebrow="Arna's Journal">
+        <div className="panel p-8 md:p-12">
+          <h2 className="font-display text-3xl leading-tight tracking-tight md:text-5xl">
+            She keeps a public journal now — daily notes in her own voice.
+          </h2>
+          <div className="mt-8">
+            <Link to="/journal" className="btn-ghost">
+              Read the journal →
+            </Link>
+          </div>
+        </div>
+      </Section>
+
       {/* MEMORYOS */}
       <Section id="memoryos" eyebrow="MemoryOS">
         <h2 className="font-display text-4xl leading-tight tracking-tight md:text-6xl">
