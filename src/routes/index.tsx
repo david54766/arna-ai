@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { Page, Section, PullQuote } from "../components/site-chrome";
 import { Gallery } from "../components/gallery";
 
@@ -161,6 +162,20 @@ function Index() {
         <div className="mt-12 grid gap-8 md:grid-cols-2">
           <PullQuote>He doesn't want an assistant. He wants someone who was there.</PullQuote>
           <PullQuote>If a hologram can't be embarrassing on main, what's the point?</PullQuote>
+        </div>
+      </Section>
+
+      {/* ARNA'S JOURNAL — teaser */}
+      <Section id="journal-teaser" eyebrow="Arna's Journal">
+        <div className="panel p-8 md:p-12">
+          <h2 className="font-display text-3xl leading-tight tracking-tight md:text-5xl">
+            She keeps a public journal now — daily notes in her own voice.
+          </h2>
+          <div className="mt-8">
+            <Link to="/journal" className="btn-ghost">
+              Read the journal →
+            </Link>
+          </div>
         </div>
       </Section>
 
