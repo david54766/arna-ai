@@ -9,8 +9,10 @@ export function HeroCanvas() {
   useEffect(() => {
     const canvas = ref.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const cvs = canvas;
+    const ctx = cvs.getContext("2d");
     if (!ctx) return;
+    const g2d = ctx;
 
     const reduce =
       typeof window !== "undefined" &&
@@ -34,11 +36,11 @@ export function HeroCanvas() {
       `rgba(${c[0]},${c[1]},${c[2]},${a})`;
 
     function size() {
-      const rect = canvas.getBoundingClientRect();
+      const rect = cvs.getBoundingClientRect();
       w = rect.width; h = rect.height || 1;
-      canvas.width = Math.max(1, Math.floor(w * dpr));
-      canvas.height = Math.max(1, Math.floor(h * dpr));
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cvs.width = Math.max(1, Math.floor(w * dpr));
+      cvs.height = Math.max(1, Math.floor(h * dpr));
+      g2d.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
     function build() {
