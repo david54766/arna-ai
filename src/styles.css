@@ -63,25 +63,30 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
+  --background: oklch(0.14 0.012 240);
+  --foreground: oklch(0.96 0.008 220);
+  --card: oklch(0.17 0.014 240);
+  --card-foreground: oklch(0.96 0.008 220);
+  --popover: oklch(0.17 0.014 240);
+  --popover-foreground: oklch(0.96 0.008 220);
+  --primary: oklch(0.85 0.11 210);
+  --primary-foreground: oklch(0.12 0.02 240);
+  --secondary: oklch(0.22 0.02 240);
+  --secondary-foreground: oklch(0.96 0.008 220);
+  --muted: oklch(0.20 0.015 240);
+  --muted-foreground: oklch(0.68 0.02 230);
+  --accent: oklch(0.80 0.13 210);
+  --accent-foreground: oklch(0.12 0.02 240);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --border: oklch(0.28 0.02 240 / 60%);
+  --input: oklch(0.28 0.02 240);
+  --ring: oklch(0.80 0.13 210);
+  --glow: oklch(0.85 0.15 210);
+  --hairline: oklch(1 0 0 / 8%);
+  --font-display: "Fraunces", "Iowan Old Style", "Palatino", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -140,5 +145,96 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-body);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, oklch(0.85 0.15 210 / 0.10), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 100%, oklch(0.85 0.15 210 / 0.06), transparent 60%);
+    background-attachment: fixed;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::selection {
+    background: oklch(0.85 0.15 210 / 0.35);
+    color: oklch(0.98 0 0);
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+  font-feature-settings: "ss01";
+}
+
+@utility font-mono {
+  font-family: var(--font-mono);
+}
+
+@utility hairline {
+  border-color: var(--hairline);
+}
+
+@utility text-glow {
+  color: var(--glow);
+  text-shadow: 0 0 24px oklch(0.85 0.15 210 / 0.35);
+}
+
+@utility btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.4rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, oklch(0.92 0.08 210), oklch(0.78 0.14 210));
+  color: oklch(0.12 0.02 240);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  box-shadow:
+    0 0 0 1px oklch(1 0 0 / 0.15) inset,
+    0 10px 40px -10px oklch(0.85 0.15 210 / 0.55);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+@utility btn-primary {
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 0 0 1px oklch(1 0 0 / 0.2) inset,
+      0 14px 50px -10px oklch(0.85 0.15 210 / 0.75);
+  }
+}
+
+@utility btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  color: var(--foreground);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+@utility btn-ghost {
+  &:hover {
+    border-color: oklch(0.85 0.15 210 / 0.5);
+    background: oklch(0.85 0.15 210 / 0.05);
+  }
+}
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: oklch(0.75 0.09 210);
+}
+
+@utility panel {
+  border: 1px solid var(--hairline);
+  border-radius: 1.25rem;
+  background: linear-gradient(180deg, oklch(0.18 0.014 240 / 0.6), oklch(0.14 0.012 240 / 0.3));
+  backdrop-filter: blur(6px);
 }
