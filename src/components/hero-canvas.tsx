@@ -65,7 +65,7 @@ export function HeroCanvas() {
     const LINK_DIST = 155;
 
     function render(animated: boolean) {
-      ctx.clearRect(0, 0, w, h);
+      g2d.clearRect(0, 0, w, h);
       px += (tx - px) * 0.05; py += (ty - py) * 0.05;
 
       for (let i = 0; i < nodes.length; i++) {
@@ -83,12 +83,12 @@ export function HeroCanvas() {
             const shimmer = animated ? 0.7 + 0.3 * Math.sin(t * 0.03 + (i + j) * 0.6) : 1;
             const a = base * shimmer;
             if (a <= 0.008) continue;
-            const grad = ctx.createLinearGradient(nx, ny, mx, my);
+            const grad = g2d.createLinearGradient(nx, ny, mx, my);
             grad.addColorStop(0, rgba(n.c, a));
             grad.addColorStop(1, rgba(m.c, a));
-            ctx.strokeStyle = grad;
-            ctx.lineWidth = 0.6 + (n.depth + m.depth) * 0.12;
-            ctx.beginPath(); ctx.moveTo(nx, ny); ctx.lineTo(mx, my); ctx.stroke();
+            g2d.strokeStyle = grad;
+            g2d.lineWidth = 0.6 + (n.depth + m.depth) * 0.12;
+            g2d.beginPath(); g2d.moveTo(nx, ny); g2d.lineTo(mx, my); g2d.stroke();
           }
         }
       }
@@ -109,14 +109,14 @@ export function HeroCanvas() {
         const rr = n.r;
         const depthAlpha = 0.35 + n.depth * 0.28;
 
-        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rr * 6);
+        const g = g2d.createRadialGradient(cx, cy, 0, cx, cy, rr * 6);
         g.addColorStop(0, rgba(n.c, 0.45 * glow * depthAlpha));
         g.addColorStop(1, rgba(n.c, 0));
-        ctx.fillStyle = g;
-        ctx.beginPath(); ctx.arc(cx, cy, rr * 6, 0, Math.PI * 2); ctx.fill();
+        g2d.fillStyle = g;
+        g2d.beginPath(); g2d.arc(cx, cy, rr * 6, 0, Math.PI * 2); g2d.fill();
 
-        ctx.fillStyle = rgba(n.c, (0.8 * glow + 0.2) * depthAlpha);
-        ctx.beginPath(); ctx.arc(cx, cy, rr, 0, Math.PI * 2); ctx.fill();
+        g2d.fillStyle = rgba(n.c, (0.8 * glow + 0.2) * depthAlpha);
+        g2d.beginPath(); g2d.arc(cx, cy, rr, 0, Math.PI * 2); g2d.fill();
       }
     }
 
