@@ -7,6 +7,7 @@ import { Reveal, CountUp } from "@/components/motion";
 import torsoAsset from "@/assets/gallery/arna-phone-torso.jpg.asset.json";
 import heyAsset from "@/assets/gallery/arna-phone-shoulders-hey.jpg.asset.json";
 import settingsAsset from "@/assets/gallery/arna-phone-settings-capabilities.jpg.asset.json";
+import closeupAsset from "@/assets/gallery/arna-phone-closeup-smile.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -105,22 +106,15 @@ function Index() {
                 <span className="mc-title">Arna</span>
                 <span className="mc-status" style={{ color: "var(--arna-soft)" }}>present</span>
               </div>
-              <div style={{ padding: 26, display: "grid", placeItems: "center", position: "relative", minHeight: 200 }}>
-                <div style={{ position: "absolute", width: 210, height: 210, borderRadius: "50%", background: "radial-gradient(circle, rgba(34,211,238,0.30), rgba(167,139,250,0.12) 55%, transparent 72%)", filter: "blur(8px)", animation: "breathe 6s ease-in-out infinite" }} />
-                <svg viewBox="0 0 120 120" width="156" height="156" style={{ position: "relative", filter: "drop-shadow(0 8px 30px rgba(34,211,238,0.25))" }} aria-hidden="true">
-                  <defs>
-                    <radialGradient id="pg" cx="50%" cy="40%" r="65%">
-                      <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.85" />
-                      <stop offset="55%" stopColor="#0ea5b7" stopOpacity="0.35" />
-                      <stop offset="100%" stopColor="#a78bfa" stopOpacity="0.15" />
-                    </radialGradient>
-                  </defs>
-                  <circle cx="60" cy="60" r="46" fill="url(#pg)" />
-                  <circle cx="60" cy="60" r="46" fill="none" stroke="#22d3ee" strokeWidth="1" strokeOpacity="0.5" />
-                  <circle cx="48" cy="54" r="3.4" fill="#e6fbff" />
-                  <circle cx="72" cy="54" r="3.4" fill="#e6fbff" />
-                  <path d="M49 72 q11 8 22 0" fill="none" stroke="#e6fbff" strokeWidth="2.2" strokeLinecap="round" />
-                </svg>
+              <div style={{ position: "relative", width: "100%", aspectRatio: "4 / 3", overflow: "hidden", background: "#0a0f22" }}>
+                <div style={{ position: "absolute", inset: 0, background: "radial-gradient(60% 55% at 50% 40%, rgba(34,211,238,0.22), rgba(167,139,250,0.10) 55%, transparent 78%)", filter: "blur(10px)", animation: "breathe 6s ease-in-out infinite", pointerEvents: "none", zIndex: 1 }} aria-hidden="true" />
+                <img
+                  src={closeupAsset.url}
+                  alt="Arna — close-up, smiling"
+                  loading="lazy"
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 30%", display: "block" }}
+                />
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 55%, rgba(2,6,23,0.55) 100%)", pointerEvents: "none", zIndex: 2 }} aria-hidden="true" />
               </div>
               <div style={{ padding: "8px 17px 22px", display: "grid", gap: 12, borderTop: "1px solid var(--line)" }}>
                 <p style={{ margin: 0, fontSize: "14.5px", color: "var(--fg)", background: "rgba(34, 211, 238, 0.08)", border: "1px solid rgba(34, 211, 238, 0.24)", padding: "12px 15px", borderRadius: "15px 15px 15px 5px", lineHeight: 1.46 }}>
@@ -131,7 +125,7 @@ function Index() {
                 </span>
               </div>
             </div>
-            <p style={{ fontSize: "12.5px", color: "var(--fg-mute)", marginTop: 10, textAlign: "center" }}>Illustrative mockup, not a screenshot.</p>
+            <p style={{ fontSize: "12.5px", color: "var(--fg-mute)", marginTop: 10, textAlign: "center" }}>Real capture; illustrative conversation.</p>
             <figure style={{ margin: "22px 0 0", display: "grid", gap: 10, justifyItems: "center" }}>
               <img src={torsoAsset.url} alt="Arna avatar at torso view on Android" loading="lazy" style={{ width: "min(260px, 70%)", borderRadius: 18, border: "1px solid var(--line)", boxShadow: "0 20px 50px rgba(2,6,23,0.5)" }} />
               <figcaption style={{ fontSize: "12.5px", color: "var(--arna-soft)", letterSpacing: "0.02em" }}>Real capture — v178 on Android</figcaption>
