@@ -80,8 +80,10 @@ function JournalEntry() {
     <Page>
       <section className="chron-hero">
         <div className="wrap chron-hero-inner" style={{ textAlign: "left" }}>
-          <Link to="/journal" style={{ color: "var(--fg-mute)", fontSize: 14 }}>← All entries</Link>
-          <p className="eyebrow" style={{ marginTop: 18 }}>{formatJournalDate(post.posted_at)}</p>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "14px 20px", marginBottom: 18 }}>
+            <Link to="/journal" style={{ color: "var(--fg-mute)", fontSize: 14, whiteSpace: "nowrap" }}>← All entries</Link>
+            <p className="eyebrow" style={{ margin: 0 }}>{formatJournalDate(post.posted_at)}</p>
+          </div>
           <h1 className="chron-title" style={{ textAlign: "left" }}>{post.title}</h1>
         </div>
       </section>
