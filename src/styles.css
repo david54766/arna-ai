@@ -866,11 +866,24 @@
 .gallery-item { will-change: transform; }
 
 /* MemoryOS screenshot — crop the phone status bar + browser URL bar (~top 12%)
-   so no private hostname is visible. Applied in both the grid tile and lightbox. */
-.crop-memoryos { position: relative; overflow: hidden; }
-.crop-memoryos > img { display: block; width: 100%; height: auto; margin-top: -12%; }
-.lightbox .crop-memoryos { max-height: 80vh; border-radius: 16px; border: 1px solid var(--line); }
-.lightbox .crop-memoryos > img { max-height: calc(80vh / 0.88); width: auto; }
+   so no private hostname is ever visible. Applied to both the grid tile and
+   the lightbox by rendering the img inside an aspect-boxed cropper with
+   object-position anchored to the BOTTOM. */
+.crop-memoryos {
+  position: relative; overflow: hidden;
+  aspect-ratio: 9 / 17; width: 100%;
+  background: #0a0f22;
+}
+.crop-memoryos > img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 100%;
+  display: block;
+}
+.lightbox .crop-memoryos {
+  width: auto; height: 80vh; aspect-ratio: 9 / 17;
+  border-radius: 16px; border: 1px solid var(--line);
+}
 
 /* demo pane entrance + active glow */
 @keyframes paneIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
