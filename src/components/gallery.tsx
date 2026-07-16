@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import excited from "@/assets/gallery/arna-phone-shoulders-excited.jpg.asset.json";
 import closeup from "@/assets/gallery/arna-phone-closeup-smile.jpg.asset.json";
@@ -55,10 +55,7 @@ export function Gallery() {
         </div>
         <ul className="gallery-grid" aria-label="Product screenshots">
           {shots.map((shot, i) => (
-            <li key={shot.src} className="gallery-item" onClick={() => setActive(i)} style={{ cursor: "pointer" }}>
-              <img src={shot.src} alt={shot.alt} loading="lazy" />
-              <p className="gallery-cap">{shot.caption}</p>
-            </li>
+            <TiltGalleryItem key={shot.src} shot={shot} onOpen={() => setActive(i)} />
           ))}
         </ul>
       </div>
@@ -89,5 +86,41 @@ export function Gallery() {
         </div>
       ) : null}
     </section>
+  );
+}
+
+function TiltGalleryItem({ shot, onOpen }: { shot: Shot; onOpen: () => void }) {
+  const ref = useRef<HTMLLIElement | null>(null);
+  const reduce = useRef(false);
+  useEffect(() => {
+    reduce.current = typeof window !== "undefined" && window.matchMedia
+      && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }, []);
+  const onMove = (e: React.PointerEvent<HTMLLIElement>) => {
+    if (reduce.current) return;
+    const el = ref.current; if (!el) return;
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;
+    const y = (e.clientY - r.top) / r.height;
+    const rx = (0.5 - y) * 10;
+    const ry = (x - 0.5) * 10;
+    el.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-4px)`;
+  };
+  const onLeave = () => {
+    const el = ref.current; if (!el) return;
+    el.style.transform = "";
+  };
+  return (
+    <li
+      ref={ref}
+      className="gallery-item"
+      onClick={onOpen}
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
+      style={{ cursor: "pointer", transformStyle: "preserve-3d" }}
+    >
+      <img src={shot.src} alt={shot.alt} loading="lazy" />
+      <p className="gallery-cap">{shot.caption}</p>
+    </li>
   );
 }
