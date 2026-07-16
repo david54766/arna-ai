@@ -1,10 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
-import torso from "@/assets/gallery/arna-phone-torso.jpg.asset.json";
 import excited from "@/assets/gallery/arna-phone-shoulders-excited.jpg.asset.json";
-import hey from "@/assets/gallery/arna-phone-shoulders-hey.jpg.asset.json";
 import closeup from "@/assets/gallery/arna-phone-closeup-smile.jpg.asset.json";
-import settings from "@/assets/gallery/arna-phone-settings-capabilities.jpg.asset.json";
 import shot6 from "@/assets/gallery/arna-app-shot-6.jpg.asset.json";
 import shot7 from "@/assets/gallery/arna-app-shot-7.jpg.asset.json";
 import shot8 from "@/assets/gallery/arna-app-shot-8.jpg.asset.json";
@@ -16,11 +13,8 @@ import shot12 from "@/assets/gallery/arna-app-shot-12.jpg.asset.json";
 type Shot = { src: string; alt: string; caption: string };
 
 const shots: Shot[] = [
-  { src: torso.url, alt: "Arna avatar torso view on Android", caption: "Arna at torso view — v178 on Android" },
   { src: excited.url, alt: "Arna reacting mid-conversation", caption: "She reacts — mid-conversation" },
-  { src: hey.url, alt: "Arna listening after wake word", caption: "Wake word: just say hey Arna" },
   { src: closeup.url, alt: "Close-up of Arna smiling", caption: "Up close" },
-  { src: settings.url, alt: "Arna settings panel", caption: "Every system, one panel" },
   { src: shot6.url, alt: "Inside the Arna app", caption: "Inside the app" },
   { src: shot7.url, alt: "Inside the Arna app", caption: "Inside the app" },
   { src: shot8.url, alt: "Inside the Arna app", caption: "Inside the app" },

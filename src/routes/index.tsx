@@ -3,6 +3,9 @@ import { Page } from "@/components/site-chrome";
 import { WaitlistForm } from "@/components/waitlist-form";
 import { Gallery } from "@/components/gallery";
 import { HeroCanvas } from "@/components/hero-canvas";
+import torsoAsset from "@/assets/gallery/arna-phone-torso.jpg.asset.json";
+import heyAsset from "@/assets/gallery/arna-phone-shoulders-hey.jpg.asset.json";
+import settingsAsset from "@/assets/gallery/arna-phone-settings-capabilities.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -80,10 +83,10 @@ function Index() {
               workspace, and the ability to delegate to subagents with a full audit trail.
             </p>
             <ul className="feature-list">
-              <li><span className="fl-title">Wake word — desktop and phone</span><span className="fl-body">Just say <em>hey Arna</em>. She wakes on the machine you're at.</span></li>
+              <li><span className="fl-title">Wake word — desktop and phone</span><span className="fl-body">Just say <em>hey Arna</em>. She wakes on the machine you're at.<figure style={{ margin: "14px 0 0", display: "grid", gap: 8, justifyItems: "start" }}><img src={heyAsset.url} alt="Arna listening after wake word — v178 on Android" loading="lazy" style={{ width: "min(220px, 60%)", borderRadius: 14, border: "1px solid var(--line)" }} /><figcaption style={{ fontSize: 12, color: "var(--fg-mute)" }}>Just say hey Arna.</figcaption></figure></span></li>
               <li><span className="fl-title">A real six-view camera</span><span className="fl-body">A fixed zoom ladder — close, shoulder, bust, mid, torso, full-body — she steps along deterministically. Expression and mood shift with the tone of the conversation.</span></li>
-              <li><span className="fl-title">She speaks while she thinks</span><span className="fl-body">Streamed speech: she starts talking while the model is still writing. Time-to-voice dropped from ~20s to ~5.7s. A conversation, not a loading spinner.</span></li>
-              <li><span className="fl-title">33 voice-commandable actions</span><span className="fl-body">Ask out loud — tag a photo, recall a memory, start a briefing, run an action. She also sees: local vision and on-device OCR. Nothing leaves your machine.</span></li>
+              <li><span className="fl-title">She speaks while she thinks</span><span className="fl-body">Streamed speech: she starts talking while the model is still writing — measured time-to-first-word cut by a third this week, and still falling. A conversation, not a loading spinner.</span></li>
+              <li><span className="fl-title">Dozens of voice-commandable actions</span><span className="fl-body">Ask out loud — tag a photo, recall a memory, start a briefing, run an action. She also sees: local vision and on-device OCR. Nothing leaves your machine.</span></li>
               <li><span className="fl-title">Hands — with permission</span><span className="fl-body">She can read the live web and operate a real browser — but any action that clicks, types, or submits waits for your approval on an in-app card first. <a href="#oversight">See how the gate works →</a></span></li>
               <li><span className="fl-title">A thinking face, driven by the Mind</span><span className="fl-body">The instant you hit send she shows she's thinking — a pre-verbal beat coloured by her carried-over mood. Fail-open: if the Mind is down, nothing changes.</span></li>
               <li><span className="fl-title">Permanent, recallable memory</span><span className="fl-body">Her identity, your shared history, and the skills you've approved survive switching LLM providers or wiping app data.</span></li>
@@ -128,6 +131,10 @@ function Index() {
               </div>
             </div>
             <p style={{ fontSize: "12.5px", color: "var(--fg-mute)", marginTop: 10, textAlign: "center" }}>Illustrative mockup, not a screenshot.</p>
+            <figure style={{ margin: "22px 0 0", display: "grid", gap: 10, justifyItems: "center" }}>
+              <img src={torsoAsset.url} alt="Arna avatar at torso view on Android" loading="lazy" style={{ width: "min(260px, 70%)", borderRadius: 18, border: "1px solid var(--line)", boxShadow: "0 20px 50px rgba(2,6,23,0.5)" }} />
+              <figcaption style={{ fontSize: "12.5px", color: "var(--arna-soft)", letterSpacing: "0.02em" }}>Real capture — v178 on Android</figcaption>
+            </figure>
           </div>
         </div>
       </section>
@@ -369,7 +376,8 @@ function Index() {
 
           <div className="panel" style={{ padding: "clamp(28px, 4vw, 44px)" }}>
             <p className="kicker">Spec sheet</p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px 32px", fontFamily: "ui-monospace, Menlo, Consolas, monospace", fontSize: 14 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: "clamp(20px, 3vw, 36px)", alignItems: "start" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px 32px", fontFamily: "ui-monospace, Menlo, Consolas, monospace", fontSize: 14 }}>
               {[
                 ["Model routing", "OpenClaw gateway"],
                 ["Bring your own model", "OpenClaw, LM Studio, Ollama"],
@@ -383,6 +391,11 @@ function Index() {
                   <span style={{ color: "var(--fg)" }}>{v}</span>
                 </div>
               ))}
+              </div>
+              <figure style={{ margin: 0, display: "grid", gap: 10, justifyItems: "center" }}>
+                <img src={settingsAsset.url} alt="Arna settings — capabilities panel on Android" loading="lazy" style={{ width: "min(240px, 100%)", borderRadius: 18, border: "1px solid var(--line)", boxShadow: "0 20px 50px rgba(2,6,23,0.5)" }} />
+                <figcaption style={{ fontSize: "12.5px", color: "var(--fg-mute)" }}>Every system, one panel.</figcaption>
+              </figure>
             </div>
           </div>
         </div>
