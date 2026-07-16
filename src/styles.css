@@ -226,24 +226,20 @@
 }
 .btn-ghost:hover { border-color: var(--arna); background: rgba(34, 211, 238, 0.09); }
 
-/* header */
+/* header — always-on dark chrome so page content never bleeds through */
 .site-header {
-  position: sticky; top: 0; z-index: 50; background: transparent;
-  border-bottom: 1px solid transparent;
-  transition: background 0.4s var(--ease), border-color 0.4s var(--ease), backdrop-filter 0.4s var(--ease);
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(4, 8, 22, 0.85);
+  backdrop-filter: blur(12px) saturate(1.2);
+  border-bottom: 1px solid var(--line);
 }
-.site-header.is-scrolled {
-  background: rgba(4, 8, 22, 0.7);
-  backdrop-filter: blur(16px) saturate(1.2);
-  -webkit-backdrop-filter: blur(16px) saturate(1.2);
-  border-bottom-color: var(--line);
-}
+.site-header.is-scrolled { background: rgba(4, 8, 22, 0.88); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; min-height: 70px; gap: 16px; }
 .brand { display: inline-flex; align-items: center; gap: 11px; color: var(--fg); font-weight: 650; letter-spacing: -0.01em; font-size: 16.5px; }
 .brand:hover { text-decoration: none; }
 .brand-mark { flex: none; filter: drop-shadow(0 0 6px rgba(34,211,238,0.35)); }
-.site-nav { display: flex; align-items: center; gap: clamp(14px, 2.6vw, 30px); }
-.site-nav a { color: var(--fg-dim); font-size: 15px; font-weight: 500; transition: color 0.2s var(--ease); }
+.site-nav { display: flex; align-items: center; gap: clamp(14px, 2.6vw, 30px); flex-wrap: nowrap; }
+.site-nav a { color: var(--fg-dim); font-size: 15px; font-weight: 500; transition: color 0.2s var(--ease); white-space: nowrap; }
 .site-nav a:hover { color: var(--fg); text-decoration: none; }
 .nav-cta {
   color: var(--fg) !important;
@@ -259,7 +255,42 @@
   display: inline-flex; align-items: center; gap: 7px;
 }
 .nav-demo::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--mind); box-shadow: 0 0 8px var(--mind); }
-@media (max-width: 860px) { .site-nav a:not(.nav-cta) { display: none; } }
+
+/* hamburger + mobile menu — collapses whenever the desktop nav would wrap */
+.nav-toggle {
+  display: none; align-items: center; justify-content: center;
+  width: 42px; height: 42px; border-radius: 11px;
+  background: var(--glass); border: 1px solid var(--line-2);
+  color: var(--fg); cursor: pointer;
+}
+.nav-toggle-bars { position: relative; width: 20px; height: 14px; display: inline-block; }
+.nav-toggle-bars span {
+  position: absolute; left: 0; right: 0; height: 2px; border-radius: 2px;
+  background: currentColor; transition: transform 0.25s var(--ease), opacity 0.2s var(--ease), top 0.25s var(--ease);
+}
+.nav-toggle-bars span:nth-child(1) { top: 0; }
+.nav-toggle-bars span:nth-child(2) { top: 6px; }
+.nav-toggle-bars span:nth-child(3) { top: 12px; }
+.nav-toggle-bars.is-open span:nth-child(1) { top: 6px; transform: rotate(45deg); }
+.nav-toggle-bars.is-open span:nth-child(2) { opacity: 0; }
+.nav-toggle-bars.is-open span:nth-child(3) { top: 6px; transform: rotate(-45deg); }
+.mobile-nav {
+  display: grid; gap: 4px; padding: 12px var(--pad) 18px;
+  background: rgba(4,8,22,0.96);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.mobile-nav a { color: var(--fg-dim); padding: 12px 4px; font-size: 16px; border-bottom: 1px solid var(--line); }
+.mobile-nav a:last-child { border-bottom: 0; }
+.mobile-nav a:hover { color: var(--fg); text-decoration: none; }
+.mobile-nav .nav-cta { border: 1px solid var(--line-2); margin-top: 8px; text-align: center; }
+@media (max-width: 1080px) {
+  .site-nav { display: none; }
+  .nav-toggle { display: inline-flex; }
+}
+@media (min-width: 1081px) {
+  .mobile-nav { display: none !important; }
+}
 
 /* section scaffolding */
 .section { padding: clamp(72px, 11vw, 148px) 0; position: relative; }
@@ -825,9 +856,21 @@
   will-change: opacity, transform;
 }
 [data-reveal].is-in { opacity: 1; transform: none; }
+/* Safety net: if JS hasn't revealed a node within 1.2s, force it visible so
+   nothing ever stays opacity 0 at rest. */
+@keyframes revealFallback { to { opacity: 1; transform: none; } }
+[data-reveal] { animation: revealFallback 460ms cubic-bezier(0.22,1,0.36,1) 1200ms forwards; }
+[data-reveal].is-in { animation: none; }
 
 /* gallery tilt base */
 .gallery-item { will-change: transform; }
+
+/* MemoryOS screenshot — crop the phone status bar + browser URL bar (~top 12%)
+   so no private hostname is visible. Applied in both the grid tile and lightbox. */
+.crop-memoryos { position: relative; overflow: hidden; }
+.crop-memoryos > img { display: block; width: 100%; height: auto; margin-top: -12%; }
+.lightbox .crop-memoryos { max-height: 80vh; border-radius: 16px; border: 1px solid var(--line); }
+.lightbox .crop-memoryos > img { max-height: calc(80vh / 0.88); width: auto; }
 
 /* demo pane entrance + active glow */
 @keyframes paneIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
