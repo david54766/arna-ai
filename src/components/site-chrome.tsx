@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 function useScrollReveal() {
   useEffect(() => {
@@ -35,16 +35,40 @@ function useScrollReveal() {
       el.style.setProperty("--reveal-delay", `${idx * 70}ms`);
       void i;
     });
+    const reveal = (el: Element) => el.classList.add("is-in");
+    const inViewport = (el: Element) => {
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const vw = window.innerWidth || document.documentElement.clientWidth;
+      return r.bottom >= -200 && r.top <= vh + 200 && r.right >= 0 && r.left <= vw;
+    };
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) {
-        if (e.isIntersecting) {
-          (e.target as HTMLElement).classList.add("is-in");
-          io.unobserve(e.target);
-        }
+        if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); }
       }
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    }, { rootMargin: "200px 0px 200px 0px", threshold: 0.01 });
     nodes.forEach((n) => io.observe(n));
-    return () => io.disconnect();
+    // Immediately reveal anything already in viewport at mount.
+    const sweep = () => {
+      nodes.forEach((n) => {
+        if (!n.classList.contains("is-in") && inViewport(n)) {
+          reveal(n); io.unobserve(n);
+        }
+      });
+    };
+    sweep();
+    const onHash = () => window.setTimeout(sweep, 50);
+    const onLoad = () => sweep();
+    window.addEventListener("hashchange", onHash);
+    window.addEventListener("load", onLoad);
+    // Safety: after 300ms, force-reveal anything unrevealed but in-viewport.
+    const safety = window.setTimeout(sweep, 320);
+    return () => {
+      io.disconnect();
+      window.removeEventListener("hashchange", onHash);
+      window.removeEventListener("load", onLoad);
+      window.clearTimeout(safety);
+    };
   }, []);
 }
 
@@ -59,20 +83,20 @@ function BrandMark() {
   );
 }
 
-export function SiteHeader({ transparentUntilScroll = true }: { transparentUntilScroll?: boolean }) {
-  const [scrolled, setScrolled] = useState(!transparentUntilScroll);
+export function SiteHeader(_props: { transparentUntilScroll?: boolean } = {}) {
+  const [open, setOpen] = useState(false);
+  const panelRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    if (!transparentUntilScroll) return;
-    const on = () => setScrolled(window.scrollY > 12);
-    on();
-    window.addEventListener("scroll", on, { passive: true });
-    return () => window.removeEventListener("scroll", on);
-  }, [transparentUntilScroll]);
-
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+  const close = () => setOpen(false);
   return (
-    <header className={`site-header ${scrolled ? "is-scrolled" : ""}`} id="top">
+    <header className="site-header is-scrolled" id="top">
       <div className="wrap header-inner">
-        <Link to="/" className="brand" aria-label="Arna — body, memory, mind — home">
+        <Link to="/" className="brand" aria-label="Arna — body, memory, mind — home" onClick={close}>
           <BrandMark />
           <span className="brand-text">Arna</span>
         </Link>
@@ -87,7 +111,32 @@ export function SiteHeader({ transparentUntilScroll = true }: { transparentUntil
           <Link to="/demo" className="nav-demo">See her think</Link>
           <a className="nav-cta" href="/#waitlist">Join waitlist</a>
         </nav>
+        <button
+          type="button"
+          className="nav-toggle"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span className={`nav-toggle-bars ${open ? "is-open" : ""}`} aria-hidden="true">
+            <span /><span /><span />
+          </span>
+        </button>
       </div>
+      {open ? (
+        <div id="mobile-nav" ref={panelRef} className="mobile-nav" role="dialog" aria-modal="false" aria-label="Primary menu">
+          <a href="/#arna" onClick={close}>Body</a>
+          <a href="/#mind" onClick={close}>Mind</a>
+          <a href="/#grows" onClick={close}>She grows</a>
+          <a href="/#memoryos" onClick={close}>Memory</a>
+          <a href="/#oversight" onClick={close}>Oversight</a>
+          <Link to="/journal" onClick={close}>Journal</Link>
+          <Link to="/chronicle" onClick={close}>Chronicle</Link>
+          <Link to="/demo" onClick={close}>See her think</Link>
+          <a className="nav-cta" href="/#waitlist" onClick={close}>Join waitlist</a>
+        </div>
+      ) : null}
     </header>
   );
 }
