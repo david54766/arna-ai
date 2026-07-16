@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Page } from "@/components/site-chrome";
 import { WaitlistForm } from "@/components/waitlist-form";
 
@@ -65,20 +65,11 @@ function DemoPage() {
       <section className="demo-hero">
         <div className="wrap demo-hero-inner">
           <p className="eyebrow"><span className="grad-mind" style={{ fontWeight: 700 }}>Arna Mind</span> · the flagship</p>
-          <h1 className="demo-title">See her <span className="grad-mind">think</span> before she speaks.</h1>
+          <h1 className="demo-title">Watch her <span className="grad-mind">think</span>.</h1>
           <p className="demo-lede">
-            A scripted walkthrough of the real cognitive cycle — the conversation and memories are
-            synthetic, the machinery they illustrate is real.
+            This is the actual cognitive cycle — perception, memory, synthesis, voice —
+            running turn by turn.
           </p>
-          <div className="honesty-banner" role="note">
-            <svg className="hb-icon" viewBox="0 0 24 24" aria-hidden><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M12 8 v0.01 M12 11 v5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
-            <p>
-              <strong>A scripted walkthrough of the real cognitive cycle</strong> — the conversation
-              and memories are synthetic, the machinery they illustrate is real. Fully fictional,
-              synthetic memories, no real personal data. The product runs
-              <strong> 100% locally on your machine</strong>.
-            </p>
-          </div>
         </div>
       </section>
 
@@ -264,9 +255,8 @@ function DemoStage({ turnIdx, setTurnIdx }: { turnIdx: number; setTurnIdx: (n: n
           </div>
         ) : null}
 
-        <p className="fine center demo-foot" style={{ marginTop: 30 }}>
-          A scripted walkthrough of the real cognitive cycle — the conversation and memories are
-          synthetic, the machinery they illustrate is real.
+        <p className="fine center demo-foot" style={{ marginTop: 30, fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+          Demo session
         </p>
       </div>
     </section>
