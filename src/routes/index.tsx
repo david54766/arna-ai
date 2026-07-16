@@ -3,7 +3,7 @@ import { Page } from "@/components/site-chrome";
 import { WaitlistForm } from "@/components/waitlist-form";
 import { Gallery } from "@/components/gallery";
 import { HeroCanvas } from "@/components/hero-canvas";
-import { Reveal, CountUp, StaggeredWords } from "@/components/motion";
+import { Reveal, CountUp } from "@/components/motion";
 import torsoAsset from "@/assets/gallery/arna-phone-torso.jpg.asset.json";
 import heyAsset from "@/assets/gallery/arna-phone-shoulders-hey.jpg.asset.json";
 import settingsAsset from "@/assets/gallery/arna-phone-settings-capabilities.jpg.asset.json";
@@ -27,10 +27,10 @@ function Index() {
         <div className="hero-veil" aria-hidden="true" />
         <div className="wrap hero-inner">
           <p className="eyebrow" style={{ opacity: 0, animation: "bubbleIn 500ms cubic-bezier(0.22,1,0.36,1) 40ms forwards" }}>Three products, one presence</p>
-          <h1 id="hero-title" className="hero-title">
-            <StaggeredWords text="One" perWordMs={90} startDelay={80} /> <span className="grad-arna"><StaggeredWords text="mouth," perWordMs={90} startDelay={170} /></span>{" "}
-            <StaggeredWords text="one" perWordMs={90} startDelay={260} /> <span className="grad-mem"><StaggeredWords text="memory," perWordMs={90} startDelay={350} /></span>{" "}
-            <StaggeredWords text="one" perWordMs={90} startDelay={440} /> <span className="grad-mind"><StaggeredWords text="mind." perWordMs={90} startDelay={530} /></span>
+          <h1 id="hero-title" className="hero-title hero-title-in">
+            <span className="hw" style={{ animationDelay: "100ms" }}>One <span className="grad-arna">mouth,</span></span>
+            <span className="hw" style={{ animationDelay: "260ms" }}> one <span className="grad-mem">memory,</span></span>
+            <span className="hw" style={{ animationDelay: "420ms" }}> one <span className="grad-mind">mind.</span></span>
           </h1>
           <Reveal as="p" className="hero-sub" delay={620}>
             Others bolt a personality onto a chatbot. This has <strong>anatomy</strong>.{" "}
