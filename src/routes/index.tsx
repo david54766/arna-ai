@@ -28,9 +28,9 @@ function Index() {
         <div className="wrap hero-inner">
           <p className="eyebrow" style={{ opacity: 0, animation: "bubbleIn 500ms cubic-bezier(0.22,1,0.36,1) 40ms forwards" }}>Three products, one presence</p>
           <h1 id="hero-title" className="hero-title hero-title-in">
-            <span className="hw" style={{ animationDelay: "100ms" }}>One <span className="grad-arna">mouth,</span></span>
-            <span className="hw" style={{ animationDelay: "260ms" }}> one <span className="grad-mem">memory,</span></span>
-            <span className="hw" style={{ animationDelay: "420ms" }}> one <span className="grad-mind">mind.</span></span>
+            One <span className="grad-arna">mouth,</span>{" "}
+            one <span className="grad-mem">memory,</span>{" "}
+            one <span className="grad-mind">mind.</span>
           </h1>
           <Reveal as="p" className="hero-sub" delay={620}>
             Others bolt a personality onto a chatbot. This has <strong>anatomy</strong>.{" "}
