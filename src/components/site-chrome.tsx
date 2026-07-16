@@ -72,6 +72,7 @@ export function SiteFooter() {
             <Link to="/chronicle">The Chronicle</Link>
             <Link to="/demo">See her think</Link>
             <a href="/#grows">She grows</a>
+            <a href="https://www.tiktok.com/@thearnaproject" target="_blank" rel="noreferrer noopener">TikTok — @thearnaproject</a>
           </div>
           <div className="footer-col">
             <h4>Reach us</h4>
@@ -82,7 +83,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="wrap footer-base">
-        <p>© {new Date().getFullYear()} easyfill.ai. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} Arna AI — an EasyFill.ai project</p>
         <p className="footer-tag">thearnaproject.com · One mouth, one memory, one mind. No cloud required.</p>
       </div>
     </footer>

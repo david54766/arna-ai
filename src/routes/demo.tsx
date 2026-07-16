@@ -67,16 +67,15 @@ function DemoPage() {
           <p className="eyebrow"><span className="grad-mind" style={{ fontWeight: 700 }}>Arna Mind</span> · the flagship</p>
           <h1 className="demo-title">See her <span className="grad-mind">think</span> before she speaks.</h1>
           <p className="demo-lede">
-            Not a canned chatbot transcript. A real Arna Mind cognitive session, recorded
-            turn-by-turn — with the pre-verbal thinking beat made visible, her whole mental state
-            exposed in a live console, and an explorable memory graph beneath it.
+            A scripted walkthrough of the real cognitive cycle — the conversation and memories are
+            synthetic, the machinery they illustrate is real.
           </p>
           <div className="honesty-banner" role="note">
             <svg className="hb-icon" viewBox="0 0 24 24" aria-hidden><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M12 8 v0.01 M12 11 v5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
             <p>
-              <strong>Recorded from a real Arna Mind session</strong> over a purpose-scripted,
-              fully fictional conversation — plus <strong>illustrative synthetic memories</strong>.
-              No real personal data appears anywhere here. The product runs
+              <strong>A scripted walkthrough of the real cognitive cycle</strong> — the conversation
+              and memories are synthetic, the machinery they illustrate is real. Fully fictional,
+              synthetic memories, no real personal data. The product runs
               <strong> 100% locally on your machine</strong>.
             </p>
           </div>
@@ -266,8 +265,8 @@ function DemoStage({ turnIdx, setTurnIdx }: { turnIdx: number; setTurnIdx: (n: n
         ) : null}
 
         <p className="fine center demo-foot" style={{ marginTop: 30 }}>
-          The conversation and its cognition are recorded from a real Arna Mind run; the persona,
-          its memories, and any review card are synthetic and purpose-built for this demo.
+          A scripted walkthrough of the real cognitive cycle — the conversation and memories are
+          synthetic, the machinery they illustrate is real.
         </p>
       </div>
     </section>
