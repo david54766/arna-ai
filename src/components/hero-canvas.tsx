@@ -99,6 +99,15 @@ export function HeroCanvas() {
         const n = order[i];
         if (animated) {
           n.x += n.vx; n.y += n.vy; n.pulse += n.pulseSpeed;
+          const adx = mxCanvas - n.x, ady = myCanvas - n.y;
+          const ad2 = adx * adx + ady * ady;
+          if (ad2 < 240 * 240 && ad2 > 1) {
+            const ad = Math.sqrt(ad2);
+            const pull = (1 - ad / 240) * 0.06 * (0.5 + n.depth * 0.35);
+            n.vx += (adx / ad) * pull;
+            n.vy += (ady / ad) * pull;
+          }
+          n.vx *= 0.985; n.vy *= 0.985;
           if (n.x < -30) n.x = w + 30;
           if (n.x > w + 30) n.x = -30;
           if (n.y < -30) n.y = h + 30;
