@@ -80,7 +80,7 @@ function Index() {
             <h2 id="arna-title" className="section-title">Everything you see and hear.</h2>
             <p className="lede">
               Arna is the embodied interface — a voiced, seeing avatar with a persistent soul. She has
-              a real six-view camera, a streaming voice, dozens of voice-commandable actions, a media
+              a real six-view camera, a streaming voice, 37 voice-commandable actions, a media
               workspace, and the ability to delegate to subagents with a full audit trail.
             </p>
             <ul className="feature-list">
