@@ -3,6 +3,7 @@ import { Page } from "@/components/site-chrome";
 import { WaitlistForm } from "@/components/waitlist-form";
 import { Gallery } from "@/components/gallery";
 import { HeroCanvas } from "@/components/hero-canvas";
+import { Reveal, CountUp } from "@/components/motion";
 import torsoAsset from "@/assets/gallery/arna-phone-torso.jpg.asset.json";
 import heyAsset from "@/assets/gallery/arna-phone-shoulders-hey.jpg.asset.json";
 import settingsAsset from "@/assets/gallery/arna-phone-settings-capabilities.jpg.asset.json";
@@ -25,25 +26,25 @@ function Index() {
         <HeroCanvas />
         <div className="hero-veil" aria-hidden="true" />
         <div className="wrap hero-inner">
-          <p className="eyebrow">Three products, one presence</p>
-          <h1 id="hero-title" className="hero-title">
-            One <span className="grad-arna">mouth</span>,
-            one <span className="grad-mem">memory</span>,
-            one <span className="grad-mind">mind</span>.
+          <p className="eyebrow" style={{ opacity: 0, animation: "bubbleIn 500ms cubic-bezier(0.22,1,0.36,1) 40ms forwards" }}>Three products, one presence</p>
+          <h1 id="hero-title" className="hero-title hero-title-in">
+            One <span className="grad-arna">mouth,</span>{" "}
+            one <span className="grad-mem">memory,</span>{" "}
+            one <span className="grad-mind">mind.</span>
           </h1>
-          <p className="hero-sub">
+          <Reveal as="p" className="hero-sub" delay={620}>
             Others bolt a personality onto a chatbot. This has <strong>anatomy</strong>.{" "}
             <strong>Arna</strong> is the body — a voiced, seeing avatar. <strong>MemoryOS</strong>{" "}
             is what she knows — a local-first, human-reviewed memory. <strong>Arna Mind</strong> is
             what she's thinking — a cognitive runtime that <em>visibly thinks before she speaks</em>.
             Each stands alone. Together they're a presence.
-          </p>
-          <div className="hero-actions">
+          </Reveal>
+          <Reveal className="hero-actions" delay={780}>
             <Link className="btn btn-primary" to="/demo">See her think — live demo</Link>
             <a className="btn btn-ghost" href="#waitlist">Join the waitlist</a>
-          </div>
+          </Reveal>
 
-          <ul className="triptych" aria-label="The three products">
+          <Reveal as="ul" className="triptych" delay={900}>
             <li className="trip trip-arna">
               <span className="trip-eyebrow">The body</span>
               <span className="trip-name">Arna</span>
@@ -60,14 +61,14 @@ function Index() {
               <span className="trip-role">A cognitive runtime — she thinks before she speaks, and her whole mind is inspectable.</span>
               <span className="trip-tag">New · the flagship differentiator</span>
             </li>
-          </ul>
+          </Reveal>
 
-          <ul className="hero-badges" aria-label="Core principles">
+          <Reveal as="ul" className="hero-badges" delay={1020}>
             <li>Runs on your hardware</li>
             <li>Your data, files you own</li>
             <li>Inspectable, not a black box</li>
             <li>No cloud required</li>
-          </ul>
+          </Reveal>
         </div>
       </section>
 
@@ -79,14 +80,14 @@ function Index() {
             <h2 id="arna-title" className="section-title">Everything you see and hear.</h2>
             <p className="lede">
               Arna is the embodied interface — a voiced, seeing avatar with a persistent soul. She has
-              a real six-view camera, a streaming voice, dozens of voice-commandable actions, a media
+              a real six-view camera, a streaming voice, 37 voice-commandable actions, a media
               workspace, and the ability to delegate to subagents with a full audit trail.
             </p>
             <ul className="feature-list">
               <li><span className="fl-title">Wake word — desktop and phone</span><span className="fl-body">Just say <em>hey Arna</em>. She wakes on the machine you're at.<figure style={{ margin: "14px 0 0", display: "grid", gap: 8, justifyItems: "start" }}><img src={heyAsset.url} alt="Arna listening after wake word — v178 on Android" loading="lazy" style={{ width: "min(220px, 60%)", borderRadius: 14, border: "1px solid var(--line)" }} /><figcaption style={{ fontSize: 12, color: "var(--fg-mute)" }}>Just say hey Arna.</figcaption></figure></span></li>
               <li><span className="fl-title">A real six-view camera</span><span className="fl-body">A fixed zoom ladder — close, shoulder, bust, mid, torso, full-body — she steps along deterministically. Expression and mood shift with the tone of the conversation.</span></li>
-              <li><span className="fl-title">She speaks while she thinks</span><span className="fl-body">Streamed speech: she starts talking while the model is still writing — measured time-to-first-word cut by a third this week, and still falling. A conversation, not a loading spinner.</span></li>
-              <li><span className="fl-title">Dozens of voice-commandable actions</span><span className="fl-body">Ask out loud — tag a photo, recall a memory, start a briefing, run an action. She also sees: local vision and on-device OCR. Nothing leaves your machine.</span></li>
+              <li><span className="fl-title">She speaks while she thinks</span><span className="fl-body">Streamed speech: she starts talking while the model is still writing. <strong className="num">Time-to-voice dropped from ~20s to ~5.7s.</strong> A conversation, not a loading spinner.</span></li>
+              <li><span className="fl-title"><CountUp to={37} /> voice-commandable actions</span><span className="fl-body">Ask out loud — tag a photo, recall a memory, start a briefing, run an action. She also sees: local vision and on-device OCR. Nothing leaves your machine.</span></li>
               <li><span className="fl-title">Hands — with permission</span><span className="fl-body">She can read the live web and operate a real browser — but any action that clicks, types, or submits waits for your approval on an in-app card first. <a href="#oversight">See how the gate works →</a></span></li>
               <li><span className="fl-title">A thinking face, driven by the Mind</span><span className="fl-body">The instant you hit send she shows she's thinking — a pre-verbal beat coloured by her carried-over mood. Fail-open: if the Mind is down, nothing changes.</span></li>
               <li><span className="fl-title">Permanent, recallable memory</span><span className="fl-body">Her identity, your shared history, and the skills you've approved survive switching LLM providers or wiping app data.</span></li>
@@ -207,7 +208,7 @@ function Index() {
           </div>
 
           <p className="fine center" style={{ marginTop: 40 }}>
-            136 tests green, and it adds <strong>zero</strong> latency to a conversation by construction.
+            <CountUp to={136} /> tests green, and it adds <strong>zero</strong> latency to a conversation by construction.
           </p>
         </div>
       </section>
