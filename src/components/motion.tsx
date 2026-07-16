@@ -26,16 +26,24 @@ export function Reveal({
     if (prefersReducedMotion()) { setShown(true); return; }
     const node = ref.current;
     if (!node) return;
+    const inViewport = () => {
+      const r = node.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      return r.bottom >= -200 && r.top <= vh + 200;
+    };
+    if (inViewport()) { setShown(true); return; }
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting) { setShown(true); io.disconnect(); break; }
         }
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+      { rootMargin: "200px 0px 200px 0px", threshold: 0.01 }
     );
     io.observe(node);
-    return () => io.disconnect();
+    // Safety: guarantee visibility within 1.2s no matter what.
+    const safety = window.setTimeout(() => { setShown(true); io.disconnect(); }, 1200);
+    return () => { io.disconnect(); window.clearTimeout(safety); };
   }, []);
 
   const merged: CSSProperties = {
