@@ -758,8 +758,8 @@
   animation: heroLineIn 700ms cubic-bezier(0.22,1,0.36,1) forwards;
 }
 @keyframes heroLineIn {
-  from { opacity: 0; filter: blur(6px); }
-  to   { opacity: 1; filter: blur(0); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* ---- ambient hero halo — the one loop we allow ---- */
