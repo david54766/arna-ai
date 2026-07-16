@@ -156,15 +156,32 @@ export function HeroCanvas() {
     if (!reduce) {
       window.addEventListener("pointermove", onPointer, { passive: true });
       document.addEventListener("visibilitychange", onVis);
-      start();
+      // Defer the first animation start so it never blocks first paint.
+      type IdleWin = Window & { requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number };
+      const w = window as IdleWin;
+      if (w.requestIdleCallback) w.requestIdleCallback(() => start(), { timeout: 200 });
+      else window.setTimeout(start, 0);
     }
     window.addEventListener("resize", onResize);
+
+    // Pause when the canvas scrolls out of view; resume when it returns.
+    let visible = true;
+    const vo = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        visible = e.isIntersecting;
+        if (!visible) stop();
+        else if (!document.hidden && !reduce) start();
+      }
+    }, { rootMargin: "0px" });
+    vo.observe(cvs);
 
     return () => {
       stop();
       window.removeEventListener("pointermove", onPointer);
       document.removeEventListener("visibilitychange", onVis);
       window.removeEventListener("resize", onResize);
+      vo.disconnect();
+      void visible;
     };
   }, []);
 

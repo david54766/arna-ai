@@ -124,17 +124,27 @@ function DemoStage({ turnIdx, setTurnIdx }: { turnIdx: number; setTurnIdx: (n: n
   const atEnd = turnIdx >= turns.length - 1;
 
   // Cycle a live-focus pulse across the three panes on each turn advance.
+  // Deferred with requestIdleCallback (or a 1-frame fallback) so it never
+  // blocks first paint or the click that advanced the turn.
   const [activePane, setActivePane] = useState<0 | 1 | 2 | null>(null);
   const prev = useRef(turnIdx);
   useEffect(() => {
     if (prev.current === turnIdx) return;
     prev.current = turnIdx;
-    let i: 0 | 1 | 2 = 0;
-    setActivePane(0);
-    const t1 = window.setTimeout(() => { i = 1; setActivePane(1); }, 550);
-    const t2 = window.setTimeout(() => { i = 2; setActivePane(2); void i; }, 1100);
-    const t3 = window.setTimeout(() => setActivePane(null), 1900);
-    return () => { window.clearTimeout(t1); window.clearTimeout(t2); window.clearTimeout(t3); };
+    type IdleWin = Window & { requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number };
+    const w = window as IdleWin;
+    const timeouts: number[] = [];
+    const schedule = (fn: () => void) => {
+      if (w.requestIdleCallback) w.requestIdleCallback(fn, { timeout: 120 });
+      else requestAnimationFrame(fn);
+    };
+    schedule(() => {
+      setActivePane(0);
+      timeouts.push(window.setTimeout(() => setActivePane(1), 550));
+      timeouts.push(window.setTimeout(() => setActivePane(2), 1100));
+      timeouts.push(window.setTimeout(() => setActivePane(null), 1900));
+    });
+    return () => { timeouts.forEach((t) => window.clearTimeout(t)); };
   }, [turnIdx]);
   const paneCls = (n: 0 | 1 | 2) => `pane${activePane === n ? " is-active" : ""}`;
 

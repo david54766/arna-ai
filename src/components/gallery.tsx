@@ -10,7 +10,7 @@ import shot10 from "@/assets/gallery/arna-app-shot-10.jpg.asset.json";
 import shot11 from "@/assets/gallery/arna-app-shot-11.jpg.asset.json";
 import shot12 from "@/assets/gallery/arna-app-shot-12.jpg.asset.json";
 
-type Shot = { src: string; alt: string; caption: string };
+type Shot = { src: string; alt: string; caption: string; crop?: boolean };
 
 const shots: Shot[] = [
   { src: excited.url, alt: "Arna reacting mid-conversation", caption: "She reacts — mid-conversation" },
@@ -18,7 +18,7 @@ const shots: Shot[] = [
   { src: shot6.url, alt: "Inside the Arna app", caption: "Inside the app" },
   { src: shot7.url, alt: "Inside the Arna app", caption: "Inside the app" },
   { src: shot8.url, alt: "Inside the Arna app", caption: "Inside the app" },
-  { src: shot9.url, alt: "Memory graph in MemoryOS", caption: "Memory graph" },
+  { src: shot9.url, alt: "Memory graph in MemoryOS", caption: "Memory graph", crop: true },
   { src: shot10.url, alt: "Inside the Arna app", caption: "Inside the app" },
   { src: shot11.url, alt: "Inside the Arna app", caption: "Inside the app" },
   { src: shot12.url, alt: "MemoryOS nav", caption: "MemoryOS" },
@@ -80,7 +80,13 @@ export function Gallery() {
           <button type="button" onClick={close} aria-label="Close"
             style={{ position: "absolute", right: 16, top: 16, padding: "6px 14px", borderRadius: 999, border: "1px solid var(--line-2)", background: "var(--glass)", color: "var(--fg-dim)", cursor: "pointer", fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase" }}>Close</button>
           <figure style={{ margin: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 12, maxHeight: "100%", maxWidth: "100%" }} onClick={(e) => e.stopPropagation()}>
-            <img src={shots[active].src} alt={shots[active].alt} style={{ maxHeight: "80vh", width: "auto", borderRadius: 16, border: "1px solid var(--line)" }} />
+            {shots[active].crop ? (
+              <div className="crop-memoryos">
+                <img src={shots[active].src} alt={shots[active].alt} />
+              </div>
+            ) : (
+              <img src={shots[active].src} alt={shots[active].alt} style={{ maxHeight: "80vh", width: "auto", borderRadius: 16, border: "1px solid var(--line)" }} />
+            )}
             <figcaption style={{ color: "var(--fg-dim)", fontSize: 14, maxWidth: 480, textAlign: "center" }}>{shots[active].caption}</figcaption>
           </figure>
         </div>
@@ -119,7 +125,13 @@ function TiltGalleryItem({ shot, onOpen }: { shot: Shot; onOpen: () => void }) {
       onPointerLeave={onLeave}
       style={{ cursor: "pointer", transformStyle: "preserve-3d" }}
     >
-      <img src={shot.src} alt={shot.alt} loading="lazy" />
+      {shot.crop ? (
+        <div className="crop-memoryos">
+          <img src={shot.src} alt={shot.alt} loading="lazy" />
+        </div>
+      ) : (
+        <img src={shot.src} alt={shot.alt} loading="lazy" />
+      )}
       <p className="gallery-cap">{shot.caption}</p>
     </li>
   );
