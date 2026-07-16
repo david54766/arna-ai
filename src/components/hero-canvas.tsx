@@ -31,6 +31,7 @@ export function HeroCanvas() {
     let running = false;
     let t = 0;
     let px = 0, py = 0, tx = 0, ty = 0;
+    let mxCanvas = -1e6, myCanvas = -1e6;
 
     const rgba = (c: [number, number, number], a: number) =>
       `rgba(${c[0]},${c[1]},${c[2]},${a})`;
@@ -130,6 +131,9 @@ export function HeroCanvas() {
     const onPointer = (e: PointerEvent) => {
       tx = (e.clientX / window.innerWidth - 0.5) * 2;
       ty = (e.clientY / window.innerHeight - 0.5) * 2;
+      const rect = cvs.getBoundingClientRect();
+      mxCanvas = e.clientX - rect.left;
+      myCanvas = e.clientY - rect.top;
     };
     const onVis = () => { if (document.hidden) stop(); else start(); };
     let resizeTimer: number | undefined;
