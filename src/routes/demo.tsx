@@ -123,6 +123,21 @@ function DemoStage({ turnIdx, setTurnIdx }: { turnIdx: number; setTurnIdx: (n: n
   }, [currentTurn]);
   const atEnd = turnIdx >= turns.length - 1;
 
+  // Cycle a live-focus pulse across the three panes on each turn advance.
+  const [activePane, setActivePane] = useState<0 | 1 | 2 | null>(null);
+  const prev = useRef(turnIdx);
+  useEffect(() => {
+    if (prev.current === turnIdx) return;
+    prev.current = turnIdx;
+    let i: 0 | 1 | 2 = 0;
+    setActivePane(0);
+    const t1 = window.setTimeout(() => { i = 1; setActivePane(1); }, 550);
+    const t2 = window.setTimeout(() => { i = 2; setActivePane(2); void i; }, 1100);
+    const t3 = window.setTimeout(() => setActivePane(null), 1900);
+    return () => { window.clearTimeout(t1); window.clearTimeout(t2); window.clearTimeout(t3); };
+  }, [turnIdx]);
+  const paneCls = (n: 0 | 1 | 2) => `pane${activePane === n ? " is-active" : ""}`;
+
   return (
     <section className="section" style={{ paddingTop: "clamp(30px, 4vw, 56px)" }}>
       <div className="wrap">
@@ -146,7 +161,7 @@ function DemoStage({ turnIdx, setTurnIdx }: { turnIdx: number; setTurnIdx: (n: n
 
         <div className="demo-grid">
           {/* A — replay */}
-          <div className="pane panel">
+          <div className={`${paneCls(0)} panel`}>
             <div className="pane-head">
               <span className="pane-badge badge-arna">A</span>
               <div>
@@ -181,7 +196,7 @@ function DemoStage({ turnIdx, setTurnIdx }: { turnIdx: number; setTurnIdx: (n: n
           </div>
 
           {/* B — mind console */}
-          <div className="pane">
+          <div className={paneCls(1)}>
             <div className="mind-console">
               <div className="mc-bar">
                 <span className="pane-badge badge-mind">B</span>
@@ -217,7 +232,7 @@ function DemoStage({ turnIdx, setTurnIdx }: { turnIdx: number; setTurnIdx: (n: n
           </div>
 
           {/* C — memory */}
-          <div className="pane panel">
+          <div className={`${paneCls(2)} panel`}>
             <div className="pane-head">
               <span className="pane-badge badge-mem">C</span>
               <div>
