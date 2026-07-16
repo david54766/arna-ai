@@ -21,7 +21,7 @@ const shots: Shot[] = [
   { src: shot9.url, alt: "Memory graph in MemoryOS", caption: "Memory graph", crop: true },
   { src: shot10.url, alt: "Inside the Arna app", caption: "Inside the app" },
   { src: shot11.url, alt: "Inside the Arna app", caption: "Inside the app" },
-  { src: shot12.url, alt: "MemoryOS nav", caption: "MemoryOS" },
+  { src: shot12.url, alt: "MemoryOS nav", caption: "MemoryOS", crop: true },
 ];
 
 export function Gallery() {
