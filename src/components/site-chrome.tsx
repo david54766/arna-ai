@@ -1,6 +1,53 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 
+function useScrollReveal() {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => el.classList.add("is-in"));
+      return;
+    }
+    const selectors = [
+      ".section .section-head",
+      ".feature-grid > li",
+      ".together-3 > *",
+      ".tiers > li",
+      ".triptych > li",
+      ".mind-console-wrap",
+      ".gallery-grid > li",
+      ".journal-list > li",
+      ".chron-entry",
+      ".grid-2 > *",
+      ".panel.waitlist-inner",
+      "#journal-teaser .panel",
+      "#gateway .panel",
+      "#roundtable .panel",
+    ].join(",");
+    const nodes = Array.from(document.querySelectorAll<HTMLElement>(selectors));
+    nodes.forEach((el, i) => {
+      el.setAttribute("data-reveal", "");
+      // stagger by sibling index within its parent (max 4 steps)
+      const parent = el.parentElement;
+      const sibs = parent ? Array.from(parent.children) : [el];
+      const idx = Math.min(sibs.indexOf(el), 4);
+      el.style.setProperty("--reveal-delay", `${idx * 70}ms`);
+      void i;
+    });
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          (e.target as HTMLElement).classList.add("is-in");
+          io.unobserve(e.target);
+        }
+      }
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    nodes.forEach((n) => io.observe(n));
+    return () => io.disconnect();
+  }, []);
+}
+
 function BrandMark() {
   return (
     <svg className="brand-mark" width="34" height="30" viewBox="0 0 40 32" aria-hidden="true" focusable="false">
@@ -91,6 +138,7 @@ export function SiteFooter() {
 }
 
 export function Page({ children, transparentHeader = false }: { children: ReactNode; transparentHeader?: boolean }) {
+  useScrollReveal();
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
