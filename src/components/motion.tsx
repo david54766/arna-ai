@@ -179,12 +179,11 @@ export function StaggeredWords({
         <span
           key={i}
           style={{
-            display: "inline-block",
             opacity: ready ? 1 : 0,
-            transform: ready ? "translateY(0)" : "translateY(14px)",
-            transition: `opacity 600ms cubic-bezier(0.22,1,0.36,1), transform 600ms cubic-bezier(0.22,1,0.36,1)`,
+            transition: `opacity 600ms cubic-bezier(0.22,1,0.36,1), filter 600ms cubic-bezier(0.22,1,0.36,1)`,
+            filter: ready ? "blur(0)" : "blur(6px)",
             transitionDelay: `${startDelay + i * perWordMs}ms`,
-            willChange: "opacity, transform",
+            willChange: "opacity, filter",
           }}
         >
           {w}{i < words.length - 1 ? "\u00A0" : ""}
